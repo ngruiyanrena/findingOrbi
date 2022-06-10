@@ -55,6 +55,9 @@ function Navbar() {
             <Link to="/FindingGroupmates" className={classes.link}>
             Finding Groupmates
             </Link>
+            <Link to="/AboutUs" className={classes.link}>
+            About Us
+            </Link>
           </div>
         )}
       </Toolbar>

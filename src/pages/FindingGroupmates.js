@@ -35,7 +35,10 @@ function FindingGroupmates() {
   }
   return (
     <div className="App">
+    <h1>Find Your Groupmates</h1>
+
     <Box>
+    <h3> Enter the following details correctly to find your potential match!</h3>
       <Input
         placeholder="ModuleCode"
         value={ModuleCode} 
