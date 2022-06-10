@@ -3,7 +3,7 @@ import {
   AppBar,
   Toolbar,
   CssBaseline,
-  //Typography,
+  // Typography,
   makeStyles,
   useTheme,
   useMediaQuery,
@@ -25,12 +25,15 @@ const useStyles = makeStyles((theme) => ({
     color: "black",
     fontSize: "18px",
     marginLeft: theme.spacing(5),
+    align: "right",
     "&:hover": {
-      color: "pink",
+     color: "pink",
       borderBottom: "1px solid white",
     },
   },
 }));
+
+// className={classes.logo}
 
 function Navbar() {
   const classes = useStyles();
@@ -42,7 +45,7 @@ function Navbar() {
       <CssBaseline />
       <Toolbar>
         {/* <Typography variant="h6" className={classes.logo}>
-         Finding Orbi
+          Finding Orbi
         </Typography> */}
 
         {isMobile ? (
@@ -53,7 +56,7 @@ function Navbar() {
               Profile
             </Link>
             <Link to="/FindingGroupmates" className={classes.link}>
-            Finding Groupmates
+              Finding Groupmates
             </Link>
           </div>
         )}

@@ -87,7 +87,7 @@ function Profile() {
       />
       </Box>
 
-      <Button type="submit" variant="contained" color="primary" onClick={createProfile}>Create Profile</Button>
+      <Button type="submit" variant="contained" color="primary" onClick={createProfile}>Save Profile</Button>
       {/* {
         profiles.map(profile => (
           <div key={profile.id}>

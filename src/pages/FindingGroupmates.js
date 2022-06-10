@@ -36,19 +36,23 @@ function FindingGroupmates() {
   return (
     <div className="App">
     <Box>
+      <h2> New Post </h2>
+      <h4 align='left'> Module Code: </h4>
       <Input
-        placeholder="ModuleCode"
+        placeholder="eg. CS2030"
         value={ModuleCode} 
         onChange={e => setPost({ ...post, ModuleCode: e.target.value})}
         //onchange handler as the user types
       />
       <div/>
+      <h4 align='left'> Number of members searching for: </h4>
       <Input
-        placeholder="MemberNo"
+        placeholder="eg. 2"
         value={MemberNo}
         onChange={e => setPost({ ...post, MemberNo: e.target.value})}
       />
       <div/>
+      <h4 align='left'> Working Style Preference: </h4>
       <Input
         placeholder="WorkStylePref"
         value={WorkStylePref}

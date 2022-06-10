@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-    Divider,
+  Divider,
   Drawer,
   IconButton,
   List,
@@ -24,7 +24,7 @@ const useStyles = makeStyles(()=>({
 }));
 
 function DrawerComponent() {
-    const classes = useStyles();
+  const classes = useStyles();
   const [openDrawer, setOpenDrawer] = useState(false);
   return (
     <>
@@ -33,7 +33,7 @@ function DrawerComponent() {
         onClose={() => setOpenDrawer(false)}
       >
         <List>
-        <ListItem onClick={() => setOpenDrawer(false)}>
+          <ListItem onClick={() => setOpenDrawer(false)}> 
             <ListItemText>
               <Link to="/" className={classes.link}>Home</Link>
             </ListItemText>
