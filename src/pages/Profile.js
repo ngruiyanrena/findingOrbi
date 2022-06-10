@@ -25,7 +25,7 @@ import FormControl from '@mui/material/FormControl';
 function Profile() {
   const [profiles, setProfiles] = useState([])
   const [profile, setProfile] = useState({ Major: "", StudyYear: "", OwnWorkStyle: "", AvailDays: ""})
-  const { Major, StudyYear, OwnWorkStyle, AvailDays } = profile
+  const { Major, StudyYear, OwnWorkStyle1, OwnWorkStyle2, OwnWorkStyle3, OwnWorkStyle4, OwnWorkStyle5, AvailDays } = profile
  
   useEffect(() => {
     fetchProfiles()
@@ -43,10 +43,9 @@ function Profile() {
     await supabase
       .from('profile')
       .insert([
-        { Major, StudyYear, OwnWorkStyle, AvailDays }
+        { Major, StudyYear, OwnWorkStyle1, OwnWorkStyle2, OwnWorkStyle3, OwnWorkStyle4, OwnWorkStyle5, AvailDays }
       ])
       .single()
-    //setProfile({ Major: "", StudyYear: "", OwnWorkStyle: "", AvailDays: "" })
     fetchProfiles()
   }
 
