@@ -14,6 +14,14 @@ import Box from "../component/Box";
 import { Button } from "@material-ui/core";
 import { Input } from "@supabase/ui";
 
+
+import * as React from 'react';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+// import FormLabel from '@mui/material/FormLabel';
+
 function Profile() {
   const [profiles, setProfiles] = useState([])
   const [profile, setProfile] = useState({ Major: "", StudyYear: "", OwnWorkStyle: "", AvailDays: ""})
@@ -50,15 +58,16 @@ function Profile() {
 
 
     <Box>
-    <h4> Please input your major: </h4>
+      <h4> Please input your major: </h4>
       <Input
         placeholder="eg: Business Analytics"
         value={Major} 
         onChange={e => setProfile({ ...profile, Major: e.target.value})}
         //onchange handler as the user types
       />
-      </Box>
-      <Box>
+    </Box>
+
+    <Box>
       <h4> Please input your Year Of Study: </h4>
       <Input
         placeholder="eg: 1"
@@ -66,28 +75,62 @@ function Profile() {
         onChange={e => setProfile({ ...profile, StudyYear: e.target.value})}
         //onchange handler as the user types
       />
-      </Box>
-      <Box>
-      <h4> Please input your Personal Work Style: </h4>
-      <Input
-        placeholder="eg: ENFP-T"
-        value={OwnWorkStyle} 
-        onChange={e => setProfile({ ...profile, OwnWorkStyle: e.target.value})}
-        //onchange handler as the user types
-      />
-      </Box>
-      <Box>
+    </Box>
+
+    <Box>
+      <h4> Please input your Personal Working Style: </h4>
+      <FormControl>
+        <RadioGroup
+          row
+          onChange={e => setProfile({ ...profile, OwnWorkStyle1: e.target.value})}
+        >
+          <FormControlLabel value="Team Member" control={<Radio />} label="Team Member" />
+          <FormControlLabel value="Team Leader" control={<Radio />} label="Team Leader" />
+        </RadioGroup>
+        <RadioGroup
+          row
+          onChange={e => setProfile({ ...profile, OwnWorkStyle2: e.target.value})}
+        >
+          <FormControlLabel value="Supportive" control={<Radio />} label="Supportive" />
+          <FormControlLabel value="Take Charge" control={<Radio />} label="Take Charge" />
+        </RadioGroup>
+        <RadioGroup
+          row
+          onChange={e => setProfile({ ...profile, OwnWorkStyle3: e.target.value})}
+        >
+          <FormControlLabel value="Organised" control={<Radio />} label="Organised" />
+          <FormControlLabel value="Spontaneous" control={<Radio />} label="Spontaneous" />
+        </RadioGroup>
+        <RadioGroup
+          row
+          onChange={e => setProfile({ ...profile, OwnWorkStyle4: e.target.value})}
+        >
+          <FormControlLabel value="Detail Oriented" control={<Radio />} label="Detail Oriented" />
+          <FormControlLabel value="Broad Perspective" control={<Radio />} label="Broad Perspective" />
+        </RadioGroup>
+        <RadioGroup
+          row
+          onChange={e => setProfile({ ...profile, OwnWorkStyle5: e.target.value})}
+        >
+          <FormControlLabel value="Creative" control={<Radio />} label="Creative" />
+          <FormControlLabel value="Strategic" control={<Radio />} label="Strategic" />
+        </RadioGroup>
+      </FormControl>
+    </Box>
+
+    <Box>
       <h4> Please input your Available Days: </h4> 
-      <p>where monday = 1, tuesday = 2, .. sunday = 7</p>
+      <p> where Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, </p>
+      <p> Friday = 5, Saturday = 6, Sunday = 7 </p>
       <Input
-        placeholder="eg:123"
+        placeholder="eg: 123"
         value={AvailDays} 
         onChange={e => setProfile({ ...profile, AvailDays: e.target.value})}
         //onchange handler as the user types
       />
-      </Box>
+    </Box>
 
-      <Button type="submit" variant="contained" color="primary" onClick={createProfile}>Save Profile</Button>
+    <Button type="submit" variant="contained" color="primary" onClick={createProfile}>Save Profile</Button>
       {/* {
         profiles.map(profile => (
           <div key={profile.id}>
