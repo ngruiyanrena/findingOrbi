@@ -35,6 +35,8 @@ function FindingGroupmates() {
   }
   return (
     <div className="App">
+    <h1>Find Your Groupmates</h1>
+
     <Box>
       <h2> New Post </h2>
       <h4 align='left'> Module Code: </h4>
