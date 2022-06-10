@@ -55,13 +55,7 @@ function FindingGroupmates() {
         //onchange handler as the user types
       />
       <div/>
-      <h4 align='left'> Number of members searching for: </h4>
-      <Input
-        placeholder="eg. 2"
-        value={MemberNo}
-        onChange={e => setPost({ ...post, MemberNo: e.target.value})}
-      />
-      <div/>
+  
       <h4 align='left'> Working Style Preference: </h4>
       <FormControl>
         <RadioGroup
@@ -100,6 +94,13 @@ function FindingGroupmates() {
           <FormControlLabel value="Strategic" control={<Radio />} label="Strategic" />
         </RadioGroup>
       </FormControl>
+      <div/>
+      <h4 align='left'> Number of members searching for: </h4>
+      <Input
+        placeholder="eg. 2"
+        value={MemberNo}
+        onChange={e => setPost({ ...post, MemberNo: e.target.value})}
+      />
       <div/>
       <button onClick={createPost}>Create Post</button>
       </Box>
