@@ -52,14 +52,14 @@ function Navbar() {
           <DrawerComponent />
         ) : (
           <div className={classes.navlinks}>
-            <Link to="/" className={classes.link}>
+            <Link to="/Profile" className={classes.link}>
               Profile
             </Link>
             <Link to="/FindingGroupmates" className={classes.link}>
               Finding Groupmates
             </Link>
             <Link to="/AboutUs" className={classes.link}>
-            About Us
+              About Us
             </Link>
           </div>
         )}
