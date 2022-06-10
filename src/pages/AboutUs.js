@@ -9,15 +9,15 @@ function AboutUs() {
         
       <h2> About Us: </h2>
       
-      <h4>
+      <p>
         Finding Orbi is a platform that allows students to connect with one
         another especially when classes are mostly conducted online. {" "}
-      </h4>
+      </p>
 
-      <h4>
+      <p>
         We hope that Finding Orbi will enhance and ease your learning experience
         by allowing increased interaction between you and your peers!
-      </h4>
+      </p>
 
     </div>
   );
