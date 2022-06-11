@@ -110,7 +110,7 @@ function FindingGroupmates() {
           <Box>
             <p>Module code : {post.ModuleCode}</p>
             <p>Searching for {post.MemberNo} member(s)</p>
-            <p>Preferred Partner Workstyle: {[post.WorkStylePref1, ", ", post.WorkStylePref2, ", ", post.WorkStylePref3, ", ", post.WorkStylePref4, ", ", post.WorkStylePref5]}</p>
+            <p>Preferred Partner Working Style: {[post.WorkStylePref1, ", ", post.WorkStylePref2, ", ", post.WorkStylePref3, ", ", post.WorkStylePref4, ", ", post.WorkStylePref5]}</p>
             </Box>
           </div>
         ))
