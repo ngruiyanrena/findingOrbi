@@ -1,9 +1,8 @@
 import '../index.css'
 import { useState, useEffect } from 'react'
 import { supabase } from '../client'
-import Login from './Login'
-import SignUp from './SignUp'
-import Account from './Account'
+import Home from './Home'
+import Home2 from './Home2'
 
 function Home1() {
   const [session, setSession] = useState(null)
@@ -18,7 +17,8 @@ function Home1() {
 
   return (
     <div className="container" style={{ padding: '50px 0 100px 0' }}>
-      {!session ? <Login /> : <Account key={session.user.id} session={session} />}
+      {!session ? <Home2 /> : <Home />}
+      {/* <Account key={session.user.id} session={session} />} */}
     </div>
   )
 }

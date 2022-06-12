@@ -23,6 +23,7 @@ function Login() {
   }
 
   return (
+
     <div className="row flex flex-center">
       <div className="col-6 form-widget" aria-live="polite">
         <h1>Welcome to Finding Orbi! </h1>
@@ -58,7 +59,7 @@ function Login() {
             )}
       </div>
       <p> Do not have an existing account? </p>
-      <Link to="./SignUp"><Button size="small" variant="contained" color="primary">Sign Up here</Button></Link>
+      <Link to="/SignUp"><Button size="small" variant="contained" color="primary">Sign up here</Button></Link>
     </div>
   )
 }

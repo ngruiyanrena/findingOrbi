@@ -1,29 +1,17 @@
-//import './App.css';
-// import { useState, useEffect } from 'react'
-// import { supabase } from './client'
-//import Task from './Task';
-//import { useAuth } from "./pages/signin";
-//import AuthBasic from "./pages/signin";
-
-// function App() {
-//   const { user } = useAuth();
-//   return (
-//     <div className="App">
-//user ? <Home/> : <AuthBasic/>
-//     </div>
-//   );
-// }
-// export default App;
-
 import React from "react";
-import Home from "./pages/Home";
 import './App.css';
+import Home1 from "./pages/Home1";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
     <div className="App" style={{
       backgroundColor: "rgb(238, 219, 248)"}}>
-      <Home/>
+      <Router> 
+        <Switch>
+          <Route path="/" component={Home1} />
+        </Switch>
+      </Router>
     </div>
   );
 }

@@ -52,7 +52,7 @@ function Navbar() {
           <DrawerComponent />
         ) : (
           <div className={classes.navlinks}>
-            <Link to="/Profile" className={classes.link}>
+            <Link to="/Account" className={classes.link}>
               Profile
             </Link>
             <Link to="/FindingGroupmates" className={classes.link}>

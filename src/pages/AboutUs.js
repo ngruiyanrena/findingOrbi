@@ -5,9 +5,8 @@ function AboutUs() {
 
   return (
     <div className="App">
-     <h1> Welcome to Finding Orbi ! </h1>
         
-      <h2> About Us: </h2>
+      <h2> About Us </h2>
       <Box>
       <p>
         Finding Orbi is a platform that allows students to connect with one

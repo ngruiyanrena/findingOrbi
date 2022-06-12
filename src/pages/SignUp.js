@@ -10,16 +10,15 @@ function SignUp() {
 
   const handleSignUp = async () => {
     try {
-        setLoading(true)
-        const { error } = await supabase.auth.signUp({ 
-            email: email, 
-            password: password })
-        if (error) throw error
-
+      setLoading(true)
+      const { error } = await supabase.auth.signUp({ 
+          email: email, 
+          password: password })
+      if (error) throw error
     } catch (error) {
-        alert(error.error_description || error.message)
+      alert(error.error_description || error.message)
     } finally {
-        setLoading(false)
+      setLoading(false)
     }
   }
 
@@ -29,7 +28,7 @@ function SignUp() {
         <h1>Welcome to Finding Orbi! </h1>
         <p>Sign up with your email and a password below</p>
         {loading ? (
-          'Sending magic link...'
+          'Creating an account ...'
         ) : (
           <form onSubmit={e => e.preventDefault()}>
             <label htmlFor="email">Email: {" "}</label>
@@ -59,7 +58,7 @@ function SignUp() {
         )}
       </div>
       <p> Already have an existing account? </p>
-      <Link to="/Login"><Button size="small" variant="contained" color="primary">Login here</Button></Link>
+      <Link to="/"><Button size="small" variant="contained" color="primary">Login here</Button></Link>
     </div>
   )
 }
