@@ -35,7 +35,7 @@ function AboutUs() {
       <Box>
       <h4>Please note that any inappropriate behavior may result in the suspension of your account.</h4>
       <p> For more information or further assistance, please do not hesitate to contact us at graccelim@gmail.com or 
-      ngruiyanrena@gmail.com</p>
+      rena.ng@u.nus.edu</p>
       </Box>
 
       <h1>All the best for your projects!</h1>

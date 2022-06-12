@@ -16,15 +16,15 @@
 // export default App;
 
 import React from "react";
-import Home from "./pages/home";
+import Home from "./pages/Home";
 import './App.css';
 
 function App() {
   return (
     <div className="App" style={{
       backgroundColor: "rgb(238, 219, 248)"}}>
-    <Home/>
-     </div>
+      <Home/>
+    </div>
   );
 }
 export default App;
