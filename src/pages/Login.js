@@ -1,35 +1,66 @@
-import { Auth, Typography, Button } from '@supabase/ui'
-import { createClient } from '@supabase/supabase-js'
+import { useState } from 'react'
+import { supabase } from '../client'
+import { Link } from 'react-router-dom';
+import { Button } from "@material-ui/core";
 
-const supabase = createClient (
-    "https://usdkpglbmcrjdwveyjkv.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzZGtwZ2xibWNyamR3dmV5amt2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTQ1ODkyNTgsImV4cCI6MTk3MDE2NTI1OH0.f0nF1DbZ1ERAQy03Kz2RBkkX7bx341ACIFBL4tyVwjY"
-)
+function Login() {
+  const [loading, setLoading] = useState(false)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-export const useAuth = () => {
-    return Auth.useUser();
-  };
+  const handleLogin = async () => {
+    try {
+      setLoading(true)
+      const { error } = await supabase.auth.signIn({ 
+        email: email, 
+        password: password })
+      if (error) throw error
+    } catch (error) {
+      alert(error.error_description || error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
 
-const Container = (props) => {
-  const { user } = Auth.useUser()
-  if (user)
-    return (
-      <>
-        <Typography.Text>Signed in: {user.email}</Typography.Text>
-        <Button block onClick={() => props.supabaseClient.auth.signOut()}>
-          Sign out
-        </Button>
-      </>
-    )
-  return props.children
-}
-
-export default function AuthBasic() {
   return (
-    <Auth.UserContextProvider supabaseClient={supabase}>
-      <Container supabaseClient={supabase}>
-        <Auth supabaseClient={supabase} />
-      </Container>
-    </Auth.UserContextProvider>
+    <div className="row flex flex-center">
+      <div className="col-6 form-widget" aria-live="polite">
+        <h1>Welcome to Finding Orbi! </h1>
+          <p>Login with your email and password below</p>
+            {loading ? (
+              'Logging in...'
+            ) : (
+              <form onSubmit={e => e.preventDefault()}>
+                <label htmlFor="email">Email:</label>
+                <input
+                  id="email"
+                  className="inputField"
+                  type="email"
+                  placeholder="Your Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <div/>
+                <label htmlFor="password">Password:</label>
+                <input
+                  id="password"
+                  className="inputField"
+                  type="password"
+                  placeholder="Your Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <div/>
+                <button onClick={handleLogin} className="button block" aria-live="polite">
+                  Login
+                </button>
+              </form>
+            )}
+      </div>
+      <p> Do not have an existing account? </p>
+      <Link to="./SignUp"><Button size="small" variant="contained" color="primary">Sign Up here</Button></Link>
+    </div>
   )
 }
+
+export default Login;
