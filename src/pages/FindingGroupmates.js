@@ -9,6 +9,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
+
 // import FormLabel from '@mui/material/FormLabel';
 
 function FindingGroupmates() {
@@ -40,9 +41,19 @@ function FindingGroupmates() {
     fetchPosts() 
     //fetchpost to update the ui with the new post
   }
+
+  const [query, setQuery] = useState("")
+
   return (
     <div className="App">
     <h1>Find Your Groupmates</h1>
+
+    <Box>
+
+    <h1>Search </h1>
+    <Input placeholder="Search Module Code here" onChange={event => setQuery(event.target.value)} />
+
+    </Box>
 
     <Box>
       <h2> New Post </h2>
@@ -105,7 +116,13 @@ function FindingGroupmates() {
       <button onClick={createPost}>Create Post</button>
       </Box>
       {
-        posts.map(post => (
+        posts.filter(post => {
+          if (query === '') {
+            return post;
+          } else if (post.ModuleCode.toLowerCase().includes(query.toLowerCase())) {
+            return post;
+          }
+        }).map((post,id) => (
           <div key={post.id}>
           <Box>
             <p>Module code : {post.ModuleCode}</p>

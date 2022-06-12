@@ -21,13 +21,14 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
+import Profile from './Profile.js';
 // import FormLabel from '@mui/material/FormLabel';
 
 function EditProfile() {
   const [profiles, setProfiles] = useState([])
   const [profile, setProfile] = useState({ Major: "", StudyYear: "", OwnWorkStyle: "", AvailDays: ""})
   const { Major, StudyYear, OwnWorkStyle1, OwnWorkStyle2, OwnWorkStyle3, OwnWorkStyle4, OwnWorkStyle5, AvailDays } = profile
- 
+
   useEffect(() => {
     fetchProfiles()
   }, [])
