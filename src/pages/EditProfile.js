@@ -29,6 +29,7 @@ function EditProfile() {
   const [profile, setProfile] = useState({ Major: "", StudyYear: "", OwnWorkStyle: "", AvailDays: ""})
   const { Major, StudyYear, OwnWorkStyle1, OwnWorkStyle2, OwnWorkStyle3, OwnWorkStyle4, OwnWorkStyle5, AvailDays } = profile
 
+ 
   useEffect(() => {
     fetchProfiles()
   }, [])
@@ -132,6 +133,16 @@ function EditProfile() {
     </Box>
 
     <Link to="/Profile"><Button type="submit" variant="contained" color="primary" onClick={createProfile}>Save Profile</Button></Link>
+      {/* {
+        profiles.map(profile => (
+          <div key={profile.id}>
+            <h3>{profile.Major}</h3>
+            <p>{profile.StudyYear}</p>
+            <p>{profile.OwnWorkStyle}</p>
+            <p>{profile.AvailDays}</p>
+          </div>
+        ))
+      }  */}
     </div>
   );
 }
