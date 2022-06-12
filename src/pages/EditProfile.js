@@ -13,6 +13,7 @@ import Box from "../component/Box";
 //import { Button } from "@supabase/ui";
 import { Button } from "@material-ui/core";
 import { Input } from "@supabase/ui";
+import { Link } from 'react-router-dom'; // IF IS REACT-WEB
 
 
 import * as React from 'react';
@@ -20,12 +21,14 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
+import Profile from './Profile.js';
 // import FormLabel from '@mui/material/FormLabel';
 
 function EditProfile() {
   const [profiles, setProfiles] = useState([])
   const [profile, setProfile] = useState({ Major: "", StudyYear: "", OwnWorkStyle: "", AvailDays: ""})
   const { Major, StudyYear, OwnWorkStyle1, OwnWorkStyle2, OwnWorkStyle3, OwnWorkStyle4, OwnWorkStyle5, AvailDays } = profile
+
  
   useEffect(() => {
     fetchProfiles()
@@ -129,7 +132,7 @@ function EditProfile() {
       />
     </Box>
 
-    <Button type="submit" variant="contained" color="primary" onClick={createProfile}>Save Profile</Button>
+    <Link to="/Profile"><Button type="submit" variant="contained" color="primary" onClick={createProfile}>Save Profile</Button></Link>
       {/* {
         profiles.map(profile => (
           <div key={profile.id}>

@@ -9,7 +9,7 @@
 //   const { user } = useAuth();
 //   return (
 //     <div className="App">
-//    {user ? <Home/> : <AuthBasic/>}
+//user ? <Home/> : <AuthBasic/>
 //     </div>
 //   );
 // }
