@@ -5,6 +5,7 @@ import FindingGroupmates from "./FindingGroupmates";
 import AboutUs from "./AboutUs";
 import '../App.css';
 import Account from './Account'
+import EditAccount from './EditAccount'
 import Home3 from './Home3'
 
 function Home() {
@@ -15,6 +16,7 @@ function Home() {
       <Switch>
         <Route exact path="/" component={Home3} />
         <Route path="/Account" component={Account} />
+        <Route path="/EditAccount" component={EditAccount} />
         <Route path="/FindingGroupmates" component={FindingGroupmates} />
         <Route path="/AboutUs" component={AboutUs} />
       </Switch>
