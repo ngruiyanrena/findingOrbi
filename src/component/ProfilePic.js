@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../client'
-import VisuallyHidden from '@reach/visually-hidden'
+import Button from '@mui/material/Button';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import { styled } from '@mui/material/styles';
 
 function ProfilePic({ url, size, onUpload }) {
   const [avatarUrl, setAvatarUrl] = useState(null)
@@ -50,6 +52,10 @@ function ProfilePic({ url, size, onUpload }) {
     }
   }
 
+  const Input = styled('input')({
+    display: 'none',
+  });
+
   return (
     <div aria-live="polite"> 
       <img
@@ -60,22 +66,12 @@ function ProfilePic({ url, size, onUpload }) {
       />
       <div/>
       {uploading ? "Uploading..." : (
-        <>
-        <div/>
-        <label className="button primary block" htmlFor="single"> 
-            {/* change to button */}
-            <u> Click here to upload </u>
+        <div>
+        <label htmlFor="single">
+          <Input accept="image/*" id="single" multiple type="file" onChange={uploadProfilePic}/>
+          <Button size="small" variant="contained" component="span" startIcon={<PhotoCamera />}>Upload</Button>
         </label>
-        <VisuallyHidden>
-            <input
-              type="file"
-              id="single"
-              accept="image/*"
-              onChange={uploadProfilePic}
-              disabled={uploading}
-            />
-        </VisuallyHidden>
-        </>
+        </div>
       )}
     </div>
   )
