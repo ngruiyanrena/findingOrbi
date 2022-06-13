@@ -3,6 +3,7 @@ import { supabase } from '../client'
 import Avatar from '../component/ProfilePic'
 import { Input, IconBookOpen, IconUser, IconMessageCircle, IconCalendar } from "@supabase/ui";
 import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 import * as React from 'react';
 import Radio from '@mui/material/Radio';
@@ -203,10 +204,12 @@ function EditAccount() {
                 </FormControl>
               </Box>
               <div> 
+                {/* <Button disabled={loading} variant="contained">Update Profile</Button> */}
                   <button className="button block primary" disabled={loading}>
                       Update profile
-                  </button> {" "}
-                  <Link to="/Account"> <button className="button block primary"> Go back to profile </button></Link>
+                  </button> 
+                  {" "}
+                  <Link to="/Account"> <Button variant="contained"> Go back to profile </Button></Link>
               </div>
           </form>
           )}

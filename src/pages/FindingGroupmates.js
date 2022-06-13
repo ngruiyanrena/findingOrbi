@@ -2,15 +2,16 @@ import '../App.css';
 import { useState, useEffect } from 'react'
 import { supabase } from '../client'
 import Box from "../component/Box";
-import { Input } from "@supabase/ui";
+import { IconSearch, IconUser, Input } from "@supabase/ui";
+import { Button } from "@material-ui/core";
+import SendIcon from '@mui/icons-material/Send';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import * as React from 'react';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-
-// import FormLabel from '@mui/material/FormLabel';
 
 function FindingGroupmates() {
   const [posts, setPosts] = useState([])
@@ -49,10 +50,12 @@ function FindingGroupmates() {
     <h1>Find Your Groupmates</h1>
 
     <Box>
-
-    <h1>Search </h1>
-    <Input placeholder="Search Module Code here" onChange={event => setQuery(event.target.value)} />
-
+      <h1>Search </h1>
+      <Input 
+        placeholder="Search Module Code here" 
+        onChange={event => setQuery(event.target.value)}
+        icon={<IconSearch />}
+      />
     </Box>
 
     <Box>
@@ -109,12 +112,14 @@ function FindingGroupmates() {
       <h4 align='left'> Number of members searching for: </h4>
       <Input
         placeholder="eg. 2"
+        descriptionText=' '
         value={MemberNo}
         onChange={e => setPost({ ...post, MemberNo: e.target.value})}
       />
       <div/>
-      <button onClick={createPost}>Create Post</button>
+      <Button variant="contained" endIcon={<SendIcon />} onClick={createPost}>Create Post</Button>
       </Box>
+
       {
         posts.filter(post => {
           if (query === '') {
@@ -124,10 +129,13 @@ function FindingGroupmates() {
           }
         }).map((post,id) => (
           <div key={post.id}>
-          <Box>
-            <p>Module code : {post.ModuleCode}</p>
-            <p>Searching for {post.MemberNo} member(s)</p>
-            <p>Preferred Partner Working Style: {[post.WorkStylePref1, ", ", post.WorkStylePref2, ", ", post.WorkStylePref3, ", ", post.WorkStylePref4, ", ", post.WorkStylePref5]}</p>
+            <Box>
+              <p>Module code : {post.ModuleCode}</p>
+              <p>Searching for {post.MemberNo} member(s)</p>
+              <p>Preferred Partner Working Style: {[post.WorkStylePref1, ", ", post.WorkStylePref2, ", ", post.WorkStylePref3, ", ", post.WorkStylePref4, ", ", post.WorkStylePref5]}</p>
+              <Button size="small" variant="outlined" startIcon={<DeleteIcon />}>Delete</Button>
+              {" "}
+              <Button size="small" variant="contained" startIcon={<IconUser />}>View Profile</Button>
             </Box>
           </div>
         ))
@@ -136,3 +144,4 @@ function FindingGroupmates() {
   );
 }
 export default FindingGroupmates;
+

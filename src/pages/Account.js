@@ -1,6 +1,7 @@
 import { supabase } from '../client'
 import { Button } from "@material-ui/core";
 import { Link } from 'react-router-dom';
+import { Edit } from '@material-ui/icons';
 // import ProfilePic from '../component/ProfilePic'
 
 
@@ -32,7 +33,7 @@ function Account() {
       <p>Personal Working Style: {}</p>
 
       <h2> </h2>
-      <Link to="/EditAccount"><Button variant="contained" color="primary">Edit Profile</Button></Link>
+      <Link to="/EditAccount"><Button variant="contained" color="primary" startIcon={<Edit />}>Edit Profile</Button></Link>
       <h2> </h2>
       <div/>
       <Link to="/"><Button size='small' variant='contained' onClick={() => supabase.auth.signOut()}>LogOut</Button></Link>

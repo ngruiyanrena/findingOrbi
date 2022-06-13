@@ -76,7 +76,7 @@ function SignUp() {
       </div>
       <h1> </h1>
       <p> Already have an existing account? </p>
-      <Link to="/" /><Button size="small" variant="contained" color="primary">Login here</Button>
+      <Link to="/"><Button size="small" variant="contained" color="primary">Login here</Button></Link>
     </div>
   )
 }
