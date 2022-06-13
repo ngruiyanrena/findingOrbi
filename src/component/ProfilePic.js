@@ -64,9 +64,9 @@ function ProfilePic({ url, size, onUpload }) {
         <div/>
         <label className="button primary block" htmlFor="single"> 
             {/* change to button */}
-            Upload
+            <u> Click here to upload </u>
         </label>
-          <VisuallyHidden>
+        <VisuallyHidden>
             <input
               type="file"
               id="single"
@@ -74,7 +74,7 @@ function ProfilePic({ url, size, onUpload }) {
               onChange={uploadProfilePic}
               disabled={uploading}
             />
-          </VisuallyHidden>
+        </VisuallyHidden>
         </>
       )}
     </div>
