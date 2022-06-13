@@ -2,6 +2,10 @@ import { useState } from 'react'
 import { supabase } from '../client'
 import { Link } from 'react-router-dom';
 import { Button } from "@material-ui/core";
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import { Email } from '@material-ui/icons';
+import { PasswordRounded } from '@mui/icons-material';
 
 function Login() {
   const [loading, setLoading] = useState(false)
@@ -32,34 +36,48 @@ function Login() {
               'Logging in...'
             ) : (
               <form onSubmit={e => e.preventDefault()}>
-                <label htmlFor="email">Email:</label>
-                <input
-                  id="email"
-                  className="inputField"
-                  type="email"
-                  placeholder="Your Email"
-                  value={email}
+                <TextField 
+                  margin="normal" 
+                  id="email" 
+                  type="email" 
+                  label=" Email" 
+                  variant="outlined"
+                  value={email} 
                   onChange={(e) => setEmail(e.target.value)}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Email />
+                      </InputAdornment>
+                    ),
+                  }}
                 />
                 <div/>
-                <label htmlFor="password">Password:</label>
-                <input
-                  id="password"
-                  className="inputField"
-                  type="password"
-                  placeholder="Your Password"
-                  value={password}
+                <TextField 
+                  margin="normal" 
+                  id="password" 
+                  type="password" 
+                  label=" Password" 
+                  variant="outlined"
+                  value={password} 
                   onChange={(e) => setPassword(e.target.value)}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <PasswordRounded />
+                      </InputAdornment>
+                    ),
+                  }}
                 />
                 <div/>
-                <button onClick={handleLogin} className="button block" aria-live="polite">
-                  Login
-                </button>
+                <h1> </h1>
+                <Button variant="contained" onClick={handleLogin}>Login</Button>
               </form>
             )}
       </div>
+      <h1> </h1>
       <p> Do not have an existing account? </p>
-      <Link to="/SignUp"><Button size="small" variant="contained" color="primary">Sign up here</Button></Link>
+      <Link to="/SignUp" /><Button size="small" variant="contained" color="primary">Sign up here</Button>
     </div>
   )
 }
