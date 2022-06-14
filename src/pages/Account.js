@@ -36,6 +36,13 @@ function Account() {
     }
   }
 
+  // function getAvailableDays(data) {
+  //   let availableDays = "";
+  //   for (var i = 0; i < data.availableDay.length; i++) {
+  //     availableDays += data.availableDay[i] + ", ";
+  //   }
+  // }
+
   return (
     <div>
       <h1> Profile </h1>
@@ -50,7 +57,8 @@ function Account() {
       <p><strong>Tele Handle:</strong> {data.username}</p>
       <p><strong>Major:</strong> {data.major}</p>
       <p><strong>Year of Study:</strong> {data.yearOfStudy}</p>
-      <p><strong>Available Days:</strong> {data.availableDays}</p>
+      <p><strong>Available Days:</strong> {data.availableDay}</p>
+      {/* <p><strong>Available Days:</strong> {getAvailableDays(data)}</p> */}
       <p><strong>Personal Working Style:</strong> {data.workingStyle1}, {data.workingStyle2}, {data.workingStyle3}, {data.workingStyle4}, {data.workingStyle5}</p>
 
       <h2> </h2>
