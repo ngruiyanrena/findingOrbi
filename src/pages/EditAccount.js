@@ -12,6 +12,34 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import Box from "../component/Box";
 
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemText from '@mui/material/ListItemText';
+import Select from '@mui/material/Select';
+import Checkbox from '@mui/material/Checkbox';
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+const days = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+];
+
 function EditAccount() {
   const session = supabase.auth.session()
   // const key = session.user.id
@@ -21,12 +49,25 @@ function EditAccount() {
   const [avatar_url, setAvatarUrl] = useState(null)
   const [major, setMajor] = useState(null)
   const [yearOfStudy, setYearOfStudy] = useState(null)
-  const [availableDays, setAvailableDays] = useState(null)
+  // const [availableDays, setAvailableDays] = useState(null)
   const [workingStyle1, setWorkingStyle1] = useState(null)
   const [workingStyle2, setWorkingStyle2] = useState(null)
   const [workingStyle3, setWorkingStyle3] = useState(null)
   const [workingStyle4, setWorkingStyle4] = useState(null)
   const [workingStyle5, setWorkingStyle5] = useState(null)
+
+
+  const [availableDay, setAvailableDay] = useState([]);
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setAvailableDay(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
+  
 
   useEffect(() => {
     getProfile()
@@ -52,7 +93,8 @@ function EditAccount() {
         setAvatarUrl(data.avatar_url)
         setMajor(data.major)
         setYearOfStudy(data.yearOfStudy)
-        setAvailableDays(data.availableDays)
+        // setAvailableDays(data.availableDays)
+        setAvailableDay(typeof data.availableDay === 'string' ? data.availableDay.split(',') : data.availableDay)
         setWorkingStyle1(data.workingStyle1)
         setWorkingStyle2(data.workingStyle2)
         setWorkingStyle3(data.workingStyle3)
@@ -79,7 +121,8 @@ function EditAccount() {
         updated_at: new Date(),
         major,
         yearOfStudy,
-        availableDays,
+        // availableDays,
+        availableDay,
         workingStyle1, 
         workingStyle2, 
         workingStyle3, 
@@ -100,6 +143,7 @@ function EditAccount() {
       setLoading(false)
     }
   }
+
 
   return (
 
@@ -153,14 +197,36 @@ function EditAccount() {
                   />
               </div>
               <div>
-                  <Input
+                  {/* <Input
                       label="Available Days:"
                       descriptionText='where Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6, Sunday = 7'
                       icon={<IconCalendar />}
                       type="text"
                       value={availableDays || ''}
                       onChange={(e) => setAvailableDays(e.target.value)}
-                  />
+                  /> */}
+
+                  <FormControl sx={{ m: 1, minWidth: 600 }}>
+                    <InputLabel id="availableDays">Available Days</InputLabel>
+                    <Select
+                      labelId="availableDays"
+                      id="availableDays"
+                      multiple
+                      value={availableDay || ''}
+                      onChange={handleChange}
+                      input={<OutlinedInput label="Available Days" />}
+                      renderValue={(selected) => selected.join(', ')}
+                      MenuProps={MenuProps}
+                      autoWidth
+                    >
+                      {days.map((day) => (
+                        <MenuItem key={day} value={day}>
+                          <Checkbox checked={availableDay.indexOf(day) > -1} />
+                          <ListItemText primary={day} />
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
               </div>
               <Box>
                 <h3> Personal Working Style: </h3>

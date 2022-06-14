@@ -3,6 +3,7 @@ import { IconSkipBack } from "@supabase/ui";
 import { Link, useParams, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { supabase } from '../client';
+import { Chat } from "@material-ui/icons";
 
 
 function ViewProfile() {
@@ -54,6 +55,8 @@ function ViewProfile() {
             <p><strong>Available Days:</strong> {data.availableDays}</p>
             <p><strong>Personal Working Style:</strong> {data.workingStyle1}, {data.workingStyle2}, {data.workingStyle3}, {data.workingStyle4}, {data.workingStyle5}</p>
 
+            <h1> </h1>
+            <Button variant="contained" color="primary" startIcon={<Chat />}>Chat</Button>
             <h1> </h1>
             <Link to="/FindingGroupmates"><Button colour="primary" variant="contained" startIcon={<IconSkipBack />}>Go back to Finding Groupmates</Button></Link>
         </div>
