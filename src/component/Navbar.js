@@ -58,6 +58,9 @@ function Navbar() {
             <Link to="/FindingGroupmates" className={classes.link}>
               Finding Groupmates
             </Link>
+            <Link to="/YourPosts" className={classes.link}>
+              Your Posts
+            </Link>
             <Link to="/AboutUs" className={classes.link}>
               About Us
             </Link>

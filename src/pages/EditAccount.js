@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../client'
-import Avatar from '../component/ProfilePic'
+import ProfilePic from '../component/ProfilePic'
 import { Input, IconBookOpen, IconUser, IconMessageCircle, IconCalendar } from "@supabase/ui";
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
@@ -39,7 +39,7 @@ function EditAccount() {
 
       let { data, error, status } = await supabase
         .from('profiles')
-        .select(`username, avatar_url, major, yearOfStudy, availableDays, workingStyle1, workingStyle2, workingStyle3, workingStyle4, workingStyle5`)
+        .select('*')
         .eq('id', user.id)
         .single()
 
@@ -66,8 +66,7 @@ function EditAccount() {
     }
   }
 
-  const updateProfile = async (e) => {
-    e.preventDefault()
+  const updateProfile = async () => {
 
     try {
       setLoading(true)
@@ -108,7 +107,7 @@ function EditAccount() {
 
       <h1> Edit Profile </h1>
 
-        <Avatar
+        <ProfilePic
             url={avatar_url}
             size={150}
             onUpload={(url) => {
@@ -121,7 +120,7 @@ function EditAccount() {
           {loading ? (
           'Saving ...'
           ) : (
-          <form onSubmit={updateProfile} className="form-widget">
+          <form onSubmit={e => e.preventDefault()} className="form-widget">
             <h1> </h1> <div>Email: {session.user.email}</div>
               <div>
                   <Input
@@ -204,12 +203,7 @@ function EditAccount() {
                 </FormControl>
               </Box>
               <div> 
-                {/* <Button disabled={loading} variant="contained">Update Profile</Button> */}
-                  <button className="button block primary" disabled={loading}>
-                      Update profile
-                  </button> 
-                  {" "}
-                  <Link to="/Account"> <Button variant="contained"> Go back to profile </Button></Link>
+                <Link to="/Account"><Button onClick={updateProfile} disabled={loading} variant="contained">Update Profile</Button></Link>
               </div>
           </form>
           )}
