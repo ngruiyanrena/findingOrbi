@@ -7,6 +7,8 @@ import '../App.css';
 import Account from './Account'
 import EditAccount from './EditAccount'
 import Home3 from './Home3'
+import YourPosts from './YourPosts'
+import ViewProfile from "./ViewProfile";
 
 function Home() {
 
@@ -15,10 +17,12 @@ function Home() {
       <Navbar/>
       <Switch>
         <Route exact path="/" component={Home3} />
-        <Route path="/Account" component={Account} />
-        <Route path="/EditAccount" component={EditAccount} />
-        <Route path="/FindingGroupmates" component={FindingGroupmates} />
-        <Route path="/AboutUs" component={AboutUs} />
+        <Route exact path="/Account" component={Account} />
+        <Route exact path="/EditAccount" component={EditAccount} />
+        <Route exact path="/FindingGroupmates" component={FindingGroupmates} />
+        <Route exact path="/YourPosts" component={YourPosts} />
+        <Route exact path="/AboutUs" component={AboutUs} />
+        <Route path="/FindingGroupmates/ViewProfile" component={ViewProfile} />
       </Switch>
     </Router>
   );
