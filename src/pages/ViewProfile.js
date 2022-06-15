@@ -40,7 +40,7 @@ function ViewProfile() {
       }
     
     return (
-        <div>
+        <div style={{height: "100vh"}}>
             <h1> View Profile </h1>
 
             <img
@@ -52,7 +52,7 @@ function ViewProfile() {
             <p><strong>Tele Handle:</strong> {data.username}</p>
             <p><strong>Major:</strong> {data.major}</p>
             <p><strong>Year of Study:</strong> {data.yearOfStudy}</p>
-            <p><strong>Available Days:</strong> {data.availableDays}</p>
+            <p><strong>Available Days:</strong> {data.availableDay}</p>
             <p><strong>Personal Working Style:</strong> {data.workingStyle1}, {data.workingStyle2}, {data.workingStyle3}, {data.workingStyle4}, {data.workingStyle5}</p>
 
             <h1> </h1>

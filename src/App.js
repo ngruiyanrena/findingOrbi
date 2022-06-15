@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 function App() {
   return (
     <div className="App" style={{
-      backgroundColor: "rgb(238, 219, 248)"}}>
+      backgroundColor: "rgb(238, 219, 248)" }}>
       <Router> 
         <Switch>
           <Route path="/" component={Home1} />
