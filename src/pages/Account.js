@@ -44,7 +44,8 @@ function Account() {
   // }
 
   return (
-    <div>
+    <div style={{height: "100vh"}}>
+
       <h1> Profile </h1>
 
       <img
