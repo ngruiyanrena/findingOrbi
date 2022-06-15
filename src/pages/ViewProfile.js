@@ -26,18 +26,18 @@ function ViewProfile() {
         if (data.avatar_url) downloadImage(data.avatar_url)
       }, [data.avatar_url])
     
-      const downloadImage = async (path) => {
-        try {
-          const { data, error } = await supabase.storage.from('avatars').download(path)
-          if (error) {
-            throw error
-          }
-          const url = URL.createObjectURL(data)
-          setAvatarUrl(url)
-        } catch (error) {
-          console.log('Error downloading image: ', error.message)
+    const downloadImage = async (path) => {
+      try {
+        const { data, error } = await supabase.storage.from('avatars').download(path)
+        if (error) {
+          throw error
         }
+        const url = URL.createObjectURL(data)
+        setAvatarUrl(url)
+      } catch (error) {
+        console.log('Error downloading image: ', error.message)
       }
+    }
     
     return (
         <div style={{height: "100vh"}}>
@@ -56,7 +56,7 @@ function ViewProfile() {
             <p><strong>Personal Working Style:</strong> {data.workingStyle1}, {data.workingStyle2}, {data.workingStyle3}, {data.workingStyle4}, {data.workingStyle5}</p>
 
             <h1> </h1>
-            <Button variant="contained" color="primary" startIcon={<Chat />}>Chat</Button>
+            <a href={"https://telegram.me/"+data.username} rel="noopener noreferrer" target="_blank"> <Button variant="contained" color="primary" startIcon={<Chat />}>Chat</Button></a> 
             <h1> </h1>
             <Link to="/FindingGroupmates"><Button colour="primary" variant="contained" startIcon={<IconSkipBack />}>Go back to Finding Groupmates</Button></Link>
         </div>
