@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../client'
 import ProfilePic from '../component/ProfilePic'
-import { Input, IconBookOpen, IconUser, IconMessageCircle, IconCalendar } from "@supabase/ui";
+import { Input, IconBookOpen, IconUser, IconMessageCircle } from "@supabase/ui";
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 
@@ -269,7 +269,9 @@ function EditAccount() {
                 </FormControl>
               </Box>
               <div> 
-                <Link to="/Account"><Button onClick={updateProfile} disabled={loading} variant="contained">Update Profile</Button></Link>
+                <Link to="/Account" style={{ textDecoration: 'none' }}>
+                  <Button onClick={updateProfile} disabled={loading} variant="contained">Update Profile</Button>
+                </Link>
               </div>
           </form>
           )}

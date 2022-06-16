@@ -16,6 +16,7 @@ function FindingGroupmates() {
   const [workingStyle3, setWorkingStyle3] = useState("")
   const [workingStyle4, setWorkingStyle4] = useState("")
   const [workingStyle5, setWorkingStyle5] = useState("")
+  const session = supabase.auth.session()
 
   useEffect(() => {
     fetchPosts()
@@ -24,7 +25,8 @@ function FindingGroupmates() {
   async function fetchPosts() {
     const { data } = await supabase
       .from('posts')
-      .select() //select all posts
+      .select() 
+      .neq('UserId', session.user.id) // only can see other users' posts
     setPosts(data)
   }
 
@@ -96,10 +98,12 @@ function FindingGroupmates() {
               <p><strong>Module code:</strong> {post.ModuleCode}</p>
               <p>Searching for <strong>{post.MemberNo}</strong> member(s)</p>
               <p><strong>Preferred Partner Working Style:</strong> {post.WorkStylePref1}, {post.WorkStylePref2}, {post.WorkStylePref3}, {post.WorkStylePref4}, {post.WorkStylePref5}</p>
-              <Link to={{
+              <Link style={{ textDecoration: 'none' }} to={{
                 pathname: "/FindingGroupmates/ViewProfile", 
                 state: {UserId: post.UserId}
-              }}><Button size="small" variant="contained" startIcon={<IconUser />}>View Profile</Button></Link>
+              }}>
+                <Button size="small" variant="contained" startIcon={<IconUser />}>View Profile</Button>
+              </Link>
             </Box>
           </div>
       ))} 

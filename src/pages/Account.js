@@ -69,10 +69,10 @@ function Account() {
       <p><strong>Personal Working Style:</strong> {data.workingStyle1}, {data.workingStyle2}, {data.workingStyle3}, {data.workingStyle4}, {data.workingStyle5}</p>
 
       <h2> </h2>
-      <Link to="/EditAccount"><Button variant="contained" color="primary" startIcon={<Edit />}>Edit Profile</Button></Link>
+      <Link href="/EditAccount" underline="none"><Button variant="contained" color="primary" startIcon={<Edit />}>Edit Profile</Button></Link>
       <h2> </h2>
       <div/>
-      <Link to="/"><Button size='small' variant='contained' onClick={() => supabase.auth.signOut()}>LogOut</Button></Link>
+      <Link href="/" underline="none"><Button size='small' variant='contained' onClick={() => supabase.auth.signOut()}>LogOut</Button></Link>
     </div>
   )
 }
