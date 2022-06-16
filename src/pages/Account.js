@@ -1,7 +1,7 @@
 import { supabase } from '../client'
 import { Button } from "@material-ui/core";
 import { Link } from 'react-router-dom';
-import { Edit } from '@material-ui/icons';
+import { Edit, RecordVoiceOver } from '@material-ui/icons';
 import { useState, useEffect } from 'react'
 
 
@@ -9,6 +9,7 @@ function Account() {
   const session = supabase.auth.session()
   const [data, setData] = useState('')
   const [avatarUrl, setAvatarUrl] = useState(null)
+  // const [days, setDays] = useState('')
 
   useEffect(() => {
     getProfile()
@@ -39,9 +40,14 @@ function Account() {
   // function getAvailableDays(data) {
   //   let availableDays = "";
   //   for (var i = 0; i < data.availableDay.length; i++) {
-  //     availableDays += data.availableDay[i] + ", ";
+  //     availableDays += <li>${data[i].availableDay} + ", "</li>
   //   }
+  //   setDays(availableDays)
   // }
+
+  // useEffect(() => {
+  //   getAvailableDays()
+  // }, [])
 
   return (
     <div style={{height: "100vh"}}>
