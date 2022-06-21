@@ -27,13 +27,13 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(5),
     align: "right",
     "&:hover": {
-     color: "pink",
+      color: "pink",
       borderBottom: "1px solid white",
     },
   },
 }));
 
-// className={classes.logo}
+
 
 function Navbar() {
   const classes = useStyles();
@@ -41,7 +41,7 @@ function Navbar() {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <AppBar position="static" color="rgb(223, 182, 243)">
+    <AppBar position="fixed" color="rgb(223, 182, 243)">
       <CssBaseline />
       <Toolbar>
         {/* <Typography variant="h6" className={classes.logo}>
