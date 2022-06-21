@@ -27,13 +27,13 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(5),
     align: "right",
     "&:hover": {
-     color: "pink",
+      color: "pink",
       borderBottom: "1px solid white",
     },
   },
 }));
 
-// className={classes.logo}
+
 
 function Navbar() {
   const classes = useStyles();
