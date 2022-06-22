@@ -46,14 +46,14 @@ function FindingGroupmates() {
         <h3>Input your preferences for each following work style field</h3>
         <p> Feel free to leave it blank if you have no preference!</p>
         <Input 
-        label= "Team member / Team leader"
-          placeholder="eg: Team member" 
+        label= "Team Member / Team Leader"
+          placeholder="eg: Team Member" 
           onChange={event => setWorkingStyle1(event.target.value)}
           />
           <h1></h1>
            <Input 
-        label= "Supportive / Take charge"
-          placeholder="eg: Take charge" 
+        label= "Supportive / Take Charge"
+          placeholder="eg: Supportive" 
           onChange={event => setWorkingStyle2(event.target.value)}
           />
            <h1></h1>
@@ -71,12 +71,10 @@ function FindingGroupmates() {
            <h1></h1>
          <Input 
         label= "Creative / Strategic"
-          placeholder="eg: Strategic" 
+          placeholder="eg: Creative" 
           onChange={event => setWorkingStyle5(event.target.value)}
           />
-       
 
-        
       </Box>
 
       {posts.filter(post => {
