@@ -49,8 +49,6 @@ function Account() {
   //   getAvailableDays()
   // }, [])
 
-  console.log("here" + typeof(data.availableDay))
-
   return (
     <div style={{height: "100vh"}}>
 
