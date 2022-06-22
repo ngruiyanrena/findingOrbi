@@ -9,7 +9,7 @@ function Account() {
   const session = supabase.auth.session()
   const [data, setData] = useState('')
   const [avatarUrl, setAvatarUrl] = useState(null)
-  // const [days, setDays] = useState('')
+  const [days, setDays] = useState('')
 
   useEffect(() => {
     getProfile()
@@ -37,18 +37,19 @@ function Account() {
     }
   }
 
-  // function getAvailableDays(data) {
-  //   let availableDays = "";
-  //   for (var i = 0; i < data.availableDay.length; i++) {
-  //     availableDays += <li>${data[i].availableDay} + ", "</li>
-  //   }
-  //   setDays(availableDays)
-  // }
+  async function getAvailableDays(data) {
+    let current = "";
+    for (var i = 0; i < data.availableDay.length; i++) {
+      current += data.availableDay[i] + ", ";
+    }
+    setDays(current)
+  }
 
-  // useEffect(() => {
-  //   getAvailableDays()
-  // }, [])
+  useEffect(() => {
+    getAvailableDays()
+  }, [])
 
+  console.log(typeof(data.availableDay))
   return (
     <div style={{height: "100vh"}}>
 
@@ -69,10 +70,10 @@ function Account() {
       <p><strong>Personal Working Style:</strong> {data.workingStyle1}, {data.workingStyle2}, {data.workingStyle3}, {data.workingStyle4}, {data.workingStyle5}</p>
 
       <h2> </h2>
-      <Link href="/EditAccount" underline="none"><Button variant="contained" color="primary" startIcon={<Edit />}>Edit Profile</Button></Link>
+      <Link to="/EditAccount" underline="none"><Button variant="contained" color="primary" startIcon={<Edit />}>Edit Profile</Button></Link>
       <h2> </h2>
       <div/>
-      <Link href="/" underline="none"><Button size='small' variant='contained' onClick={() => supabase.auth.signOut()}>LogOut</Button></Link>
+      <Link to="/" underline="none"><Button size='small' variant='contained' onClick={() => supabase.auth.signOut()}>LogOut</Button></Link>
     </div>
   )
 }

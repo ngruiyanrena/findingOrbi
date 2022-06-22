@@ -34,6 +34,10 @@ function YourPosts() {
         setPosts(data)
     }
 
+    function refreshPage() {
+        window.location.reload(false);
+      }
+
     async function createPost() {
         await supabase
             .from('posts') //insert individual post input by the user
@@ -54,6 +58,53 @@ function YourPosts() {
             .eq('id', post.id)
         fetchPosts()
     }
+
+    async function finalclick() {
+        createPost();
+        resetRadioState1();
+        resetRadioState2();
+        resetRadioState3();
+        resetRadioState4();
+        resetRadioState5();
+    }
+
+    const [q1, setq1] = useState('')
+    const handleChange1 = (event) => {
+        setq1(event.target.value)
+    }
+    async function resetRadioState1() {
+        setq1('');
+      }
+
+      const [q2, setq2] = useState('')
+      const handleChange2 = (event) => {
+          setq2(event.target.value)
+      }
+      async function resetRadioState2() {
+          setq2('');
+        }
+
+        const [q3, setq3] = useState('')
+        const handleChange3 = (event) => {
+            setq3(event.target.value)
+        }
+        async function resetRadioState3() {
+            setq3('');
+          }
+          const [q4, setq4] = useState('')
+          const handleChange4 = (event) => {
+              setq4(event.target.value)
+          }
+          async function resetRadioState4() {
+              setq4('');
+            }
+            const [q5, setq5] = useState('')
+            const handleChange5 = (event) => {
+                setq5(event.target.value)
+            }
+            async function resetRadioState5() {
+                setq5('');
+              }
 
     return (
         <div> 
@@ -76,36 +127,37 @@ function YourPosts() {
                     row
                     onChange={e => setPost({ ...post, WorkStylePref1: e.target.value})}
                     >
-                    <FormControlLabel value="Team Member" control={<Radio />} label="Team Member" />
-                    <FormControlLabel value="Team Leader" control={<Radio />} label="Team Leader" />
+                    <FormControlLabel value="Team Member" control={<Radio />} label="Team Member" onChange={handleChange1} checked={q1 === 'Team Member'}/>
+                    <FormControlLabel value="Team Leader" control={<Radio />} label="Team Leader" onChange={handleChange1} checked={q1 === 'Team Leader'}/>
+                
                     </RadioGroup>
                     <RadioGroup
                     row
                     onChange={e => setPost({ ...post, WorkStylePref2: e.target.value})}
                     >
-                    <FormControlLabel value="Supportive" control={<Radio />} label="Supportive" />
-                    <FormControlLabel value="Take Charge" control={<Radio />} label="Take Charge" />
+                    <FormControlLabel value="Supportive" control={<Radio />} label="Supportive" onChange={handleChange2} checked={q2 === 'Supportive'}/>
+                    <FormControlLabel value="Take Charge" control={<Radio />} label="Take Charge" onChange={handleChange2} checked={q2 === 'Take Charge'}/>
                     </RadioGroup>
                     <RadioGroup
                     row
                     onChange={e => setPost({ ...post, WorkStylePref3: e.target.value})}
                     >
-                    <FormControlLabel value="Organised" control={<Radio />} label="Organised" />
-                    <FormControlLabel value="Spontaneous" control={<Radio />} label="Spontaneous" />
+                    <FormControlLabel value="Organised" control={<Radio />} label="Organised" onChange={handleChange3} checked={q3 === 'Organised'}/>
+                    <FormControlLabel value="Spontaneous" control={<Radio />} label="Spontaneous" onChange={handleChange3} checked={q3 === 'Spontaneous'}/>
                     </RadioGroup>
                     <RadioGroup
                     row
                     onChange={e => setPost({ ...post, WorkStylePref4: e.target.value})}
                     >
-                    <FormControlLabel value="Detail Oriented" control={<Radio />} label="Detail Oriented" />
-                    <FormControlLabel value="Broad Perspective" control={<Radio />} label="Broad Perspective" />
+                    <FormControlLabel value="Detail Oriented" control={<Radio />} label="Detail Oriented" onChange={handleChange4} checked={q4 === 'Detail Oriented'}/>
+                    <FormControlLabel value="Broad Perspective" control={<Radio />} label="Broad Perspective" onChange={handleChange4} checked={q4 === 'Broad Perspective'}/>
                     </RadioGroup>
                     <RadioGroup
                     row
                     onChange={e => setPost({ ...post, WorkStylePref5: e.target.value})}
                     >
-                    <FormControlLabel value="Creative" control={<Radio />} label="Creative" />
-                    <FormControlLabel value="Strategic" control={<Radio />} label="Strategic" />
+                    <FormControlLabel value="Creative" control={<Radio />} label="Creative" onChange={handleChange5} checked={q5 === 'Creative'}/>
+                    <FormControlLabel value="Strategic" control={<Radio />} label="Strategic" onChange={handleChange5} checked={q5 === 'Strategic'}/>
                     </RadioGroup>
                 </FormControl>
                 <div/>
@@ -117,7 +169,7 @@ function YourPosts() {
                     onChange={e => setPost({ ...post, MemberNo: e.target.value})}
                 />
                 <div/>
-                <Button variant="contained" endIcon={<SendIcon />} onClick={createPost}>Create Post</Button>
+                <Button variant="contained" endIcon={<SendIcon />} onClick={finalclick}>Create Post</Button>
             </Box>
 
             {posts.map((post) => (
