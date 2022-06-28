@@ -22,11 +22,15 @@ function Account() {
       setProfiles(data)
       let availDays = "";
       let length = data.availableDay.length
-      for (let i = 0; i < length - 1; i++) {
-        availDays += data.availableDay[i] + ", ";
+      if (length === 0) {
+        setDays("")
+      } else {
+        for (let i = 0; i < length - 1; i++) {
+          availDays += data.availableDay[i] + ", ";
+        }
+        availDays += data.availableDay[length - 1]
+        setDays(availDays)
       }
-      availDays += data.availableDay[length - 1]
-      setDays(availDays)
     }
   }
 
