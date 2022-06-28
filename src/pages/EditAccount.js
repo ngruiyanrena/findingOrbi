@@ -42,14 +42,12 @@ const days = [
 
 function EditAccount() {
   const session = supabase.auth.session()
-  // const key = session.user.id
 
   const [loading, setLoading] = useState(true)
   const [username, setUsername] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
   const [major, setMajor] = useState(null)
   const [yearOfStudy, setYearOfStudy] = useState(null)
-  // const [availableDays, setAvailableDays] = useState(null)
   const [workingStyle1, setWorkingStyle1] = useState(null)
   const [workingStyle2, setWorkingStyle2] = useState(null)
   const [workingStyle3, setWorkingStyle3] = useState(null)
@@ -93,7 +91,6 @@ function EditAccount() {
         setAvatarUrl(data.avatar_url)
         setMajor(data.major)
         setYearOfStudy(data.yearOfStudy)
-        // setAvailableDays(data.availableDays)
         setAvailableDay(typeof data.availableDay === 'string' ? data.availableDay.split(',') : data.availableDay)
         setWorkingStyle1(data.workingStyle1)
         setWorkingStyle2(data.workingStyle2)
@@ -121,7 +118,6 @@ function EditAccount() {
         updated_at: new Date(),
         major,
         yearOfStudy,
-        // availableDays,
         availableDay,
         workingStyle1, 
         workingStyle2, 
@@ -197,15 +193,6 @@ function EditAccount() {
                   />
               </div>
               <div>
-                  {/* <Input
-                      label="Available Days:"
-                      descriptionText='where Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6, Sunday = 7'
-                      icon={<IconCalendar />}
-                      type="text"
-                      value={availableDays || ''}
-                      onChange={(e) => setAvailableDays(e.target.value)}
-                  /> */}
-
                   <FormControl sx={{ m: 1, minWidth: 600 }}>
                     <InputLabel id="availableDays">Available Days</InputLabel>
                     <Select

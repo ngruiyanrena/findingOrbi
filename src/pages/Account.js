@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react'
 
 function Account() {
   const session = supabase.auth.session()
-  const [data, setData] = useState('')
+  const [profiles, setProfiles] = useState('')
   const [avatarUrl, setAvatarUrl] = useState(null)
   const [days, setDays] = useState('')
 
@@ -17,12 +17,22 @@ function Account() {
 
   async function getProfile() {
     const { data } = await supabase.from('profiles').select('*').eq('id', session.user.id).single()
-    if (data) setData(data)
+    
+    if (data) {
+      setProfiles(data)
+      let availDays = "";
+      let length = data.availableDay.length
+      for (let i = 0; i < length - 1; i++) {
+        availDays += data.availableDay[i] + ", ";
+      }
+      availDays += data.availableDay[length - 1]
+      setDays(availDays)
+    }
   }
 
   useEffect(() => {
-    if (data.avatar_url) downloadImage(data.avatar_url)
-  }, [data.avatar_url])
+    if (profiles.avatar_url) downloadImage(profiles.avatar_url)
+  }, [profiles.avatar_url])
 
   const downloadImage = async (path) => {
     try {
@@ -37,19 +47,6 @@ function Account() {
     }
   }
 
-  async function getAvailableDays(data) {
-    let current = "";
-    for (var i = 0; i < data.availableDay.length; i++) {
-      current += data.availableDay[i] + ", ";
-    }
-    setDays(current)
-  }
-
-  useEffect(() => {
-    getAvailableDays()
-  }, [])
-
-  console.log(typeof(data.availableDay))
   return (
     <div style={{height: "100vh"}}>
 
@@ -62,12 +59,11 @@ function Account() {
       />
 
       <p><strong>Email:</strong> {session.user.email}</p>
-      <p><strong>Tele Handle:</strong> {data.username}</p>
-      <p><strong>Major:</strong> {data.major}</p>
-      <p><strong>Year of Study:</strong> {data.yearOfStudy}</p>
-      <p><strong>Available Days:</strong> {data.availableDay}</p>
-      {/* <p><strong>Available Days:</strong> {getAvailableDays(data)}</p> */}
-      <p><strong>Personal Working Style:</strong> {data.workingStyle1}, {data.workingStyle2}, {data.workingStyle3}, {data.workingStyle4}, {data.workingStyle5}</p>
+      <p><strong>Tele Handle:</strong> {profiles.username}</p>
+      <p><strong>Major:</strong> {profiles.major}</p>
+      <p><strong>Year of Study:</strong> {profiles.yearOfStudy}</p>
+      <p><strong>Available Days:</strong> {days}</p> 
+      <p><strong>Personal Working Style:</strong> {profiles.workingStyle1}, {profiles.workingStyle2}, {profiles.workingStyle3}, {profiles.workingStyle4}, {profiles.workingStyle5}</p>
 
       <h2> </h2>
 
