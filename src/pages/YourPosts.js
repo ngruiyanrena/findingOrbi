@@ -74,37 +74,39 @@ function YourPosts() {
     }
     async function resetRadioState1() {
         setq1('');
-      }
+    }
 
-      const [q2, setq2] = useState('')
-      const handleChange2 = (event) => {
-          setq2(event.target.value)
-      }
-      async function resetRadioState2() {
-          setq2('');
-        }
+    const [q2, setq2] = useState('')
+    const handleChange2 = (event) => {
+        setq2(event.target.value)
+    }
+    async function resetRadioState2() {
+        setq2('');
+    }
 
-        const [q3, setq3] = useState('')
-        const handleChange3 = (event) => {
-            setq3(event.target.value)
-        }
-        async function resetRadioState3() {
-            setq3('');
-          }
-          const [q4, setq4] = useState('')
-          const handleChange4 = (event) => {
-              setq4(event.target.value)
-          }
-          async function resetRadioState4() {
-              setq4('');
-            }
-            const [q5, setq5] = useState('')
-            const handleChange5 = (event) => {
-                setq5(event.target.value)
-            }
-            async function resetRadioState5() {
-                setq5('');
-              }
+    const [q3, setq3] = useState('')
+    const handleChange3 = (event) => {
+        setq3(event.target.value)
+    }
+    async function resetRadioState3() {
+        setq3('');
+    }
+
+    const [q4, setq4] = useState('')
+    const handleChange4 = (event) => {
+        setq4(event.target.value)
+    }
+    async function resetRadioState4() {
+        setq4('');
+    }
+
+    const [q5, setq5] = useState('')
+    const handleChange5 = (event) => {
+        setq5(event.target.value)
+    }
+    async function resetRadioState5() {
+        setq5('');
+    }
 
     return (
         <div> 
