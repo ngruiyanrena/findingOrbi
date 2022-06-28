@@ -14,14 +14,29 @@ function ViewProfile() {
 
     const [data, setData] = useState('')
     const [avatarUrl, setAvatarUrl] = useState(null)
+    const [days, setDays] = useState('')
 
     useEffect(() => {
         getProfile()
       }, [])
 
     async function getProfile() {
-        const { data } = await supabase.from('profiles').select('*').eq('id', UserId).single()
+      const { data } = await supabase.from('profiles').select('*').eq('id', UserId).single()
+
+      if (data) {
         setData(data)
+        let availDays = "";
+        let length = data.availableDay.length
+        if (length === 0) {
+          setDays("")
+        } else {
+          for (let i = 0; i < length - 1; i++) {
+            availDays += data.availableDay[i] + ", ";
+          }
+          availDays += data.availableDay[length - 1]
+          setDays(availDays)
+        }
+      }
     }
 
     useEffect(() => {
@@ -60,7 +75,7 @@ function ViewProfile() {
             <p><strong>Tele Handle:</strong> {data.username}</p>
             <p><strong>Major:</strong> {data.major}</p>
             <p><strong>Year of Study:</strong> {data.yearOfStudy}</p>
-            <p><strong>Available Days:</strong> {data.availableDay}</p>
+            <p><strong>Available Days:</strong> {days}</p>
             <p><strong>Personal Working Style:</strong> {data.workingStyle1}, {data.workingStyle2}, {data.workingStyle3}, {data.workingStyle4}, {data.workingStyle5}</p>
 
             <h1> </h1>

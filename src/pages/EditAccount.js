@@ -91,7 +91,9 @@ function EditAccount() {
         setAvatarUrl(data.avatar_url)
         setMajor(data.major)
         setYearOfStudy(data.yearOfStudy)
-        setAvailableDay(typeof data.availableDay === 'string' ? data.availableDay.split(',') : data.availableDay)
+        if (data.availableDay.length !== 0) {
+          setAvailableDay(typeof data.availableDay === 'string' ? data.availableDay.split(',') : data.availableDay)
+        }
         setWorkingStyle1(data.workingStyle1)
         setWorkingStyle2(data.workingStyle2)
         setWorkingStyle3(data.workingStyle3)
