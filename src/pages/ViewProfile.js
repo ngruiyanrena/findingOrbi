@@ -5,7 +5,8 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../client';
 import { Chat } from "@material-ui/icons";
 import { HandshakeOutlined } from "@mui/icons-material";
-import LoadingButton from '@mui/lab/LoadingButton';
+import ToggleButton from '@mui/material/ToggleButton';
+import * as React from 'react';
 
 
 function ViewProfile() {
@@ -57,10 +58,7 @@ function ViewProfile() {
     }
 
     // "offer" button 
-    const [loading, setLoading] = useState(false);
-    function handleClick() {
-      setLoading(true);
-    }
+    const [selected, setSelected] = React.useState(false);
 
     return (
         <div style={{height: "100vh"}}>
@@ -83,15 +81,16 @@ function ViewProfile() {
               <Button variant="contained" color="primary" startIcon={<Chat />}>Chat</Button>
             </a> 
             {" "}
-            <LoadingButton
-              onClick={handleClick}
-              loading={loading}
-              startIcon={<HandshakeOutlined />}
-              loadingIndicator="Pending..."
-              variant="contained"
+            <ToggleButton
+              value="check"
+              selected={selected}
+              onChange={() => {
+                setSelected(!selected);
+              }}
+              size="small"
             >
-              Offer
-            </LoadingButton>
+              <HandshakeOutlined /> Offer 
+            </ToggleButton>
             <h1> </h1>
             <Link to="/FindingGroupmates" style={{ textDecoration: 'none' }}>
               <Button colour="primary" variant="contained" startIcon={<IconSkipBack />}>Go back to Finding Groupmates</Button>
