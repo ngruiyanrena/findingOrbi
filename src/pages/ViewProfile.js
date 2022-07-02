@@ -11,14 +11,16 @@ import * as React from 'react';
 
 function ViewProfile() {
     const { type } = useParams()
-    const { UserId } = useLocation().state;
+    const { UserId, PostId } = useLocation().state;
 
     const [data, setData] = useState('')
     const [avatarUrl, setAvatarUrl] = useState(null)
     const [days, setDays] = useState('')
+    const session = supabase.auth.session()
 
     useEffect(() => {
         getProfile()
+        setStateOfButton()
       }, [])
 
     async function getProfile() {
@@ -58,7 +60,45 @@ function ViewProfile() {
     }
 
     // "offer" button 
-    const [selected, setSelected] = React.useState(false);
+    const [selected, setSelected] = useState(false);
+
+    async function setStateOfButton() {
+      const { data } = await supabase
+        .from('posts')
+        .select('OffersUserIds')
+        .eq('id', PostId)
+        .single()
+      for (var i = 0; i < data.OffersUserIds.length; i++) {
+        if (data.OffersUserIds[i] === session.user.id) {
+          setSelected(true)
+        }
+      }
+    }
+    
+    async function offer() {
+      setSelected(!selected)
+      const { data } = await supabase
+        .from('posts')
+        .select('OffersUserIds')
+        .eq('id', PostId)
+        .single()
+      if (selected === false) {
+        data.OffersUserIds.push(session.user.id)
+      } else {
+        for (var i = 0; i < data.OffersUserIds.length; i++) {
+          if (data.OffersUserIds[i] === session.user.id) {
+            data.OffersUserIds.splice(i, 1)
+          }
+        }
+      }
+      const unique = (value, index, self) => {
+        return self.indexOf(value) === index
+      }
+      const { updatedOffersUserIds } = await supabase
+        .from('posts')
+        .update({ OffersUserIds : data.OffersUserIds.filter(unique) })
+        .eq('id', PostId)
+    }
 
     return (
         <div style={{height: "100vh"}}>
@@ -83,9 +123,10 @@ function ViewProfile() {
             {" "}
             <ToggleButton
               value="check"
+              color='info'
               selected={selected}
-              onChange={() => {
-                setSelected(!selected);
+              onClick={() => {
+                offer();
               }}
               size="small"
             >

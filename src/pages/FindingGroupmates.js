@@ -98,7 +98,7 @@ function FindingGroupmates() {
               <p><strong>Preferred Partner Working Style:</strong> {post.WorkStylePref1}, {post.WorkStylePref2}, {post.WorkStylePref3}, {post.WorkStylePref4}, {post.WorkStylePref5}</p>
               <Link style={{ textDecoration: 'none' }} to={{
                 pathname: "/FindingGroupmates/ViewProfile", 
-                state: {UserId: post.UserId}
+                state: {UserId: post.UserId, PostId: post.id}
               }}>
                 <Button size="small" variant="contained" startIcon={<IconUser />}>View Profile</Button>
               </Link>
