@@ -9,6 +9,7 @@ import EditAccount from './EditAccount'
 import Home3 from './Home3'
 import YourPosts from './YourPosts'
 import ViewProfile from "./ViewProfile";
+import YourProjects from "./YourProjects";
 
 function Home() {
 
@@ -21,6 +22,7 @@ function Home() {
         <Route exact path="/EditAccount" component={EditAccount} />
         <Route exact path="/FindingGroupmates" component={FindingGroupmates} />
         <Route exact path="/YourPosts" component={YourPosts} />
+        <Route exact path="/YourProjects" component={YourProjects} />
         <Route exact path="/AboutUs" component={AboutUs} />
         <Route path="/FindingGroupmates/ViewProfile" component={ViewProfile} />
       </Switch>

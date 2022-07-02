@@ -182,14 +182,11 @@ function YourPosts() {
                         <p><strong>Preferred Partner Working Style:</strong> {post.WorkStylePref1}, {post.WorkStylePref2}, {post.WorkStylePref3}, {post.WorkStylePref4}, {post.WorkStylePref5}</p>
                         <Button onClick={() => deletePost(post)} size="small" variant="outlined" startIcon={<DeleteIcon />}>Delete</Button>
                         
-                        <p><strong>Pending Offers:</strong></p>
-                        {/* for loop to go through the array of post.OffersUserIds */}
-                        {/* <Link style={{ textDecoration: 'none' }} to={{
-                            pathname: "/YourPosts/ViewOfferProfile", 
-                            state: {UserId: post.UserId}
-                        }}>
-                            <Button size="small" variant="contained" startIcon={<IconUser />}>View Profile</Button>
-                        </Link> */}
+                        <p><strong>{post.OffersUserIds.length} Pending Offer(s):</strong></p>
+                        {post.OffersUserIds.map((offer) => (
+                            <div> {offer} </div>
+                        ))}
+                        
                     </Box>
                 </div>
             ))}
