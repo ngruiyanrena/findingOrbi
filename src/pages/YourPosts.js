@@ -15,6 +15,10 @@ import FormControl from '@mui/material/FormControl';
 import { Link } from 'react-router-dom';
 import { IconUser } from "@supabase/ui";
 
+import IconButton from '@mui/material/IconButton';
+import { Cancel, Check } from '@material-ui/icons';
+
+
 function YourPosts() {
     // const session = supabase.auth.session()
     const user = supabase.auth.user()
@@ -108,6 +112,42 @@ function YourPosts() {
         setq5('');
     }
 
+    async function deleteOffer(post, offerUserId) {
+        const { data } = await supabase
+            .from('posts')
+            .select('OffersUserIds')
+            .eq('id', post.id)
+            .single()
+        for (var i = 0; i < data.OffersUserIds.length; i++) {
+            if (data.OffersUserIds[i] === offerUserId) {
+                data.OffersUserIds.splice(i, 1)
+            }
+        }
+        const { updatedOffersUserIds } = await supabase
+            .from('posts')
+            .update({ OffersUserIds : data.OffersUserIds })
+            .eq('id', post.id)
+        fetchPosts()
+    }
+
+    async function acceptOffer(post, offerUserId) {
+        const { data } = await supabase
+            .from('posts')
+            .select('AcceptUserIds')
+            .eq('id', post.id)
+            .single()
+        data.AcceptUserIds.push(offerUserId)
+        const unique = (value, index, self) => {
+            return self.indexOf(value) === index
+        }
+        const { updatedAcceptUserIds } = await supabase
+            .from('posts')
+            .update({ AcceptUserIds : data.AcceptUserIds.filter(unique) })
+            .eq('id', post.id)
+        deleteOffer(post, offerUserId)
+        fetchPosts()
+    }
+
     return (
         <div> 
             <h1>Your Posts</h1>
@@ -183,8 +223,23 @@ function YourPosts() {
                         <Button onClick={() => deletePost(post)} size="small" variant="outlined" startIcon={<DeleteIcon />}>Delete</Button>
                         
                         <p><strong>{post.OffersUserIds.length} Pending Offer(s):</strong></p>
-                        {post.OffersUserIds.map((offer) => (
-                            <div> {offer} </div>
+                        {post.OffersUserIds.map((offerUserId) => (
+                            <div>
+                            <Link style={{ textDecoration: 'none' }} to={{
+                                pathname: "/YourPosts/ViewProfile", 
+                                state: {OfferUserId: offerUserId}
+                                }}>
+                                <Button size="small" variant="text" startIcon={<IconUser />}>View Profile</Button>
+                            </Link>
+                            {" "}
+                            <IconButton onClick={() => deleteOffer(post, offerUserId)} color='error' aria-label="delete">
+                                <Cancel />
+                            </IconButton>
+                            {" "}
+                            <IconButton onClick={() => acceptOffer(post, offerUserId)} color='success' aria-label="delete">
+                                <Check />
+                            </IconButton>
+                            </div>
                         ))}
                         
                     </Box>
