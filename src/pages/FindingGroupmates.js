@@ -100,7 +100,7 @@ function FindingGroupmates() {
                 pathname: "/FindingGroupmates/ViewProfile", 
                 state: {UserId: post.UserId, PostId: post.id}
               }}>
-                <Button size="small" variant="contained" startIcon={<IconUser />}>View Profile</Button>
+                <Button size="small" variant="contained" startIcon={<IconUser />}>View Profile(s)</Button>
               </Link>
             </Box>
           </div>
