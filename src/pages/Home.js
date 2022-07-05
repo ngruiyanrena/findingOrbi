@@ -10,6 +10,8 @@ import Home3 from './Home3'
 import YourPosts from './YourPosts'
 import ViewProfile from "./ViewProfile";
 import YourProjects from "./YourProjects";
+import ViewProfile1 from "./ViewProfile1";
+import Reviews from "./Reviews";
 import ViewProfileYourProjects from "./ViewProfileYourProjects";
 import ViewProfileYourPosts from "./ViewProfileYourPosts";
 import ViewProfilePendingProjects from "./ViewProfilePendingProjects";
@@ -28,6 +30,8 @@ function Home() {
         <Route exact path="/YourProjects" component={YourProjects} />
         <Route exact path="/AboutUs" component={AboutUs} />
         <Route path="/FindingGroupmates/ViewProfile" component={ViewProfile} />
+        <Route path="/YourPosts/ViewProfile" component={ViewProfile1} />
+        <Route path="/Reviews" component={Reviews} />
         <Route path="/YourPosts/ViewProfile" component={ViewProfileYourPosts} />
         <Route path="/YourProjects/ViewGroupmatesProfiles" component={ViewProfileYourProjects} />
         <Route path="/YourProjects/ViewProfile" component={ViewProfilePendingProjects} />
