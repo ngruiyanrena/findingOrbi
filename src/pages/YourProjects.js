@@ -58,10 +58,10 @@ function YourProjects() {
                     <p><strong>Module Code:</strong> {offerPost.ModuleCode}</p>
                     <p><strong>Number of Accepted Groupmates</strong> : <strong>{offerPost.AcceptUserIds.length + 1} </strong> member(s)</p>
                     <Link style={{ textDecoration: 'none' }} to={{
-                        pathname: "/YourProjects/ViewGroupmatesProfiles", 
+                        pathname: "/YourProjects/ViewProfile", 
                         state: {UserId: offerPost.UserId, PostId: offerPost.id}
                     }}>
-                        <Button size="small" variant="contained" startIcon={<IconUser />}>View Profile(s) of Groupmates</Button>
+                        <Button size="small" variant="contained" startIcon={<IconUser />}>View Profile(s)</Button>
                     </Link>
                 </Box>
             </div>
