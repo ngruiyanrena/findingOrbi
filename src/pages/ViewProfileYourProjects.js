@@ -10,7 +10,7 @@ import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 
 
-function ViewProfile1() {
+function ViewProfileYourProjects() {
     const { type } = useParams()
     const { UserId, PostId } = useLocation().state;
 
@@ -122,4 +122,4 @@ function ViewProfile1() {
     ) 
 }
 
-export default ViewProfile1
+export default ViewProfileYourProjects
