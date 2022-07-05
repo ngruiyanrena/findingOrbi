@@ -9,7 +9,7 @@ import * as React from 'react';
 
 function ViewProfileYourPosts() {
     const { type } = useParams()
-    const { OfferUserId } = useLocation().state;
+    const { UserId } = useLocation().state;
 
     const [data, setData] = useState('')
     const [avatarUrl, setAvatarUrl] = useState(null)
@@ -21,7 +21,7 @@ function ViewProfileYourPosts() {
       }, [])
 
     async function getProfile() {
-      const { data } = await supabase.from('profiles').select('*').eq('id', OfferUserId).single()
+      const { data } = await supabase.from('profiles').select('*').eq('id', UserId).single()
 
       if (data) {
         setData(data)
