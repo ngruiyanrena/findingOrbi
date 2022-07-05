@@ -11,6 +11,7 @@ import YourPosts from './YourPosts'
 import ViewProfile from "./ViewProfile";
 import YourProjects from "./YourProjects";
 import ViewProfile1 from "./ViewProfile1";
+import Reviews from "./Reviews";
 
 function Home() {
 
@@ -27,6 +28,7 @@ function Home() {
         <Route exact path="/AboutUs" component={AboutUs} />
         <Route path="/FindingGroupmates/ViewProfile" component={ViewProfile} />
         <Route path="/YourPosts/ViewProfile" component={ViewProfile1} />
+        <Route path="/Reviews" component={Reviews} />
       </Switch>
     </Router>
   );
