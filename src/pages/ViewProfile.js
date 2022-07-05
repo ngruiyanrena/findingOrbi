@@ -8,62 +8,60 @@ import { HandshakeOutlined } from "@mui/icons-material";
 import ToggleButton from '@mui/material/ToggleButton';
 import * as React from 'react';
 import Box from "../component/Box";
+import Stack from '@mui/material/Stack';
+import Divider from '@mui/material/Divider';
 
 
 function ViewProfile() {
     const { type } = useParams()
     const { UserId, PostId } = useLocation().state;
 
-    const [profile, setProfile] = useState('')
+    const [info, setInfo] = useState('')
+    const [profiles, setProfiles] = useState('')
+    const [ days, setDays ] = useState('')
     const [avatarUrl, setAvatarUrl] = useState(null)
     const session = supabase.auth.session()
-    const [acceptedProfiles, setAcceptedProfiles] = useState('')
 
     useEffect(() => {
-        getProfile()
+        getProfiles()
         setStateOfButton()
-        getAcceptedProfiles()
       }, [])
 
-    async function getProfile() {
-      const { data } = await supabase.from('profiles').select('*').eq('id', UserId).single()
-
-      if (data) {
-        setProfile(data)
-      }
-    }
-
-    function getAvailableDays(profileInfo) {
-      console.log(profileInfo)
-      let availDays = "";
-      let length = profileInfo.length
-      if (length === 0) {
-        return "" 
-      } else {
-        for (let i = 0; i < length - 1; i++) {
-          availDays += profileInfo[i] + ", ";
-        }
-        availDays += profileInfo[length - 1]
-        return availDays
-      }
-    }
-
-    async function getAcceptedProfiles() {
+    async function getProfiles() {
+      const { data : profileUserId } = await supabase.from('profiles').select('*').eq('id', UserId).single()
       const { data : post } = await supabase.from('posts').select('*').eq('id', PostId).single()
       let profiles = []
+      if (profileUserId) {
+        profiles.push(profileUserId)
+      }
       if (post.AcceptUserIds) {
         for (var i = 0; i < post.AcceptUserIds.length; i++) {
           const { data } = await supabase.from('profiles').select('*').eq('id', post.AcceptUserIds[i]).single()
           profiles.push(data)
         }
       }
-      setAcceptedProfiles(profiles)
+      setProfiles(profiles)
     }
 
     useEffect(() => {
-        if (profile.avatar_url) downloadImage(profile.avatar_url)
-      }, [profile.avatar_url])
-    
+      if (info.availableDay) getAvailableDays(info.availableDay)
+      if (info.avatar_url) downloadImage(info.avatar_url)
+    }, [info])
+
+    function getAvailableDays(profileInfo) {
+      let availDays = "";
+      let length = profileInfo.length
+      if (length === 0) {
+        setDays("")
+      } else {
+        for (let i = 0; i < length - 1; i++) {
+          availDays += profileInfo[i] + ", ";
+        }
+        availDays += profileInfo[length - 1]
+        setDays(availDays)
+      }
+    }
+
     const downloadImage = async (path) => {
       try {
         const { data, error } = await supabase.storage.from('avatars').download(path)
@@ -122,44 +120,37 @@ function ViewProfile() {
         <div style={{minheight: "100vh"}}>
             <h1> View Profile(s) </h1>
 
-            <Box>
-            <h2> Groupmate 1</h2>
+            <Stack direction="row" spacing={2}  divider={<Divider orientation="vertical" flexItem />} justifyContent="center">
+            {
+      
+              profiles ? profiles.map((profile) => (
+                <div>  
+                <Button variant="outlined" onClick={() => setInfo(profile)}> View Profile of Groupmate {profiles.indexOf(profile) + 1} </Button>
+                </div>
+              )) : "" 
+              
+            }
+            </Stack>
+
+            <Box> 
 
             <img
               src={avatarUrl ? avatarUrl : `https://artscimedia.case.edu/wp-content/uploads/sites/79/2016/12/14205134/no-user-image.gif`} 
               alt={avatarUrl ? 'Avatar' : 'No image'}
               style={{ height: 150, width: 150 }}
             />
-    
-            <p><strong>Tele Handle:</strong> {profile.username}</p>
-            <p><strong>Major:</strong> {profile.major}</p>
-            <p><strong>Year of Study:</strong> {profile.yearOfStudy}</p>
-            <p><strong>Available Days:</strong> {profile.availableDay ? getAvailableDays(profile.availableDay) : ""}</p>
-            <p><strong>Personal Working Style:</strong> {profile.workingStyle1}, {profile.workingStyle2}, {profile.workingStyle3}, {profile.workingStyle4}, {profile.workingStyle5}</p>
 
-            <h1> </h1>
-            <a href={"https://telegram.me/"+profile.username} rel="noopener noreferrer" target="_blank" style={{ textDecoration: 'none' }}>
+            <p><strong>Tele Handle:</strong> {info.username}</p>
+            <p><strong>Major:</strong> {info.major}</p>
+            <p><strong>Year of Study:</strong> {info.yearOfStudy}</p>
+            <p><strong>Available Days:</strong> {days}</p>
+            <p><strong>Personal Working Style:</strong> {info.workingStyle1}, {info.workingStyle2}, {info.workingStyle3}, {info.workingStyle4}, {info.workingStyle5}</p>
+            
+            <a href={"https://telegram.me/"+info.username} rel="noopener noreferrer" target="_blank" style={{ textDecoration: 'none' }}>
               <Button variant="contained" color="primary" startIcon={<Chat />}>Chat</Button>
             </a> 
+
             </Box>
-
-            {acceptedProfiles ? acceptedProfiles.map((acceptedProfile) => (
-              <div>
-              <Box>
-                <h2> Groupmate {acceptedProfiles.indexOf(acceptedProfile) + 2}</h2>
-                <p><strong>Tele Handle:</strong> {acceptedProfile.username}</p>
-                <p><strong>Major:</strong> {acceptedProfile.major}</p>
-                <p><strong>Year of Study:</strong> {acceptedProfile.yearOfStudy}</p>
-                <p><strong>Available Days:</strong> {acceptedProfile.availableDay ? getAvailableDays(acceptedProfile.availableDay) : ""}</p>
-                <p><strong>Personal Working Style:</strong> {acceptedProfile.workingStyle1}, {acceptedProfile.workingStyle2}, {acceptedProfile.workingStyle3}, {acceptedProfile.workingStyle4}, {acceptedProfile.workingStyle5}</p>
-
-                <h1> </h1>
-                <a href={"https://telegram.me/"+acceptedProfile.username} rel="noopener noreferrer" target="_blank" style={{ textDecoration: 'none' }}>
-                  <Button variant="contained" color="primary" startIcon={<Chat />}>Chat</Button>
-                </a> 
-              </Box>
-              </div>
-            )) : ""}
 
             <ToggleButton
               value="check"
