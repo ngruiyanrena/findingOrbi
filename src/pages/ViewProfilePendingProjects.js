@@ -12,7 +12,7 @@ import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 
 
-function ViewProfile() {
+function ViewProfilePendingProjects() {
     const { type } = useParams()
     const { UserId, PostId } = useLocation().state;
 
@@ -164,11 +164,11 @@ function ViewProfile() {
               <HandshakeOutlined /> Offer 
             </ToggleButton>
             <h1> </h1>
-            <Link to="/FindingGroupmates" style={{ textDecoration: 'none' }}>
-              <Button colour="primary" variant="contained" startIcon={<IconSkipBack />}>Go back to Finding Groupmates</Button>
+            <Link to="/YourProjects" style={{ textDecoration: 'none' }}>
+              <Button colour="primary" variant="contained" startIcon={<IconSkipBack />}>Go back to Pending Projects</Button>
             </Link>
         </div>
     ) 
 }
 
-export default ViewProfile
+export default ViewProfilePendingProjects

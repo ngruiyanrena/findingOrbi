@@ -227,7 +227,7 @@ function YourPosts() {
                             <div>
                             <Link style={{ textDecoration: 'none' }} to={{
                                 pathname: "/YourPosts/ViewProfile", 
-                                state: {OfferUserId: offerUserId}
+                                state: {UserId: offerUserId}
                                 }}>
                                 <Button size="small" variant="text" startIcon={<IconUser />}>View Profile</Button>
                             </Link>
@@ -241,7 +241,18 @@ function YourPosts() {
                             </IconButton>
                             </div>
                         ))}
-                        
+
+                        <p><strong>{post.AcceptUserIds.length} Accepted Offer(s):</strong></p>
+                        {post.AcceptUserIds.map((acceptUserId) => (
+                            <div>
+                            <Link style={{ textDecoration: 'none' }} to={{
+                                pathname: "/YourPosts/ViewProfile", 
+                                state: {UserId: acceptUserId}
+                                }}>
+                                <Button size="small" variant="text" startIcon={<IconUser />}>View Profile</Button>
+                            </Link>
+                            </div>
+                        ))}
                     </Box>
                 </div>
             ))}

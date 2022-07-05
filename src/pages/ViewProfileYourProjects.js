@@ -1,18 +1,16 @@
 import { Button } from "@material-ui/core";
-import { IconSkipBack } from "@supabase/ui";
+import { IconPenTool, IconSkipBack } from "@supabase/ui";
 import { Link, useParams, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { supabase } from '../client';
 import { Chat } from "@material-ui/icons";
-import { HandshakeOutlined } from "@mui/icons-material";
-import ToggleButton from '@mui/material/ToggleButton';
 import * as React from 'react';
 import Box from "../component/Box";
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 
 
-function ViewProfile() {
+function ViewProfileYourProjects() {
     const { type } = useParams()
     const { UserId, PostId } = useLocation().state;
 
@@ -24,7 +22,6 @@ function ViewProfile() {
 
     useEffect(() => {
         getProfiles()
-        setStateOfButton()
       }, [])
 
     async function getProfiles() {
@@ -36,8 +33,10 @@ function ViewProfile() {
       }
       if (post.AcceptUserIds) {
         for (var i = 0; i < post.AcceptUserIds.length; i++) {
-          const { data } = await supabase.from('profiles').select('*').eq('id', post.AcceptUserIds[i]).single()
-          profiles.push(data)
+          if (post.AcceptUserIds[i] !== session.user.id) {
+            const { data } = await supabase.from('profiles').select('*').eq('id', post.AcceptUserIds[i]).single()
+            profiles.push(data)
+          }
         }
       }
       setProfiles(profiles)
@@ -75,49 +74,10 @@ function ViewProfile() {
       }
     }
 
-    // "offer" button 
-    const [selected, setSelected] = useState(false);
-
-    async function setStateOfButton() {
-      const { data } = await supabase
-        .from('posts')
-        .select('OffersUserIds')
-        .eq('id', PostId)
-        .single()
-      for (var i = 0; i < data.OffersUserIds.length; i++) {
-        if (data.OffersUserIds[i] === session.user.id) {
-          setSelected(true)
-        }
-      }
-    }
-    
-    async function offer() {
-      setSelected(!selected)
-      const { data } = await supabase
-        .from('posts')
-        .select('OffersUserIds')
-        .eq('id', PostId)
-        .single()
-      if (selected === false) {
-        data.OffersUserIds.push(session.user.id)
-      } else {
-        for (var i = 0; i < data.OffersUserIds.length; i++) {
-          if (data.OffersUserIds[i] === session.user.id) {
-            data.OffersUserIds.splice(i, 1)
-          }
-        }
-      }
-      const unique = (value, index, self) => {
-        return self.indexOf(value) === index
-      }
-      const { updatedOffersUserIds } = await supabase
-        .from('posts')
-        .update({ OffersUserIds : data.OffersUserIds.filter(unique) })
-        .eq('id', PostId)
-    }
 
     return (
-        <div style={{minheight: "100vh"}}>
+        <div style={{height: "100vh"}}>
+
             <h1> View Profile(s) </h1>
 
             <Stack direction="row" spacing={2}  divider={<Divider orientation="vertical" flexItem />} justifyContent="center">
@@ -149,26 +109,17 @@ function ViewProfile() {
             <a href={"https://telegram.me/"+info.username} rel="noopener noreferrer" target="_blank" style={{ textDecoration: 'none' }}>
               <Button variant="contained" color="primary" startIcon={<Chat />}>Chat</Button>
             </a> 
+            {" "}
+            <Button variant="contained" color="primary" startIcon={<IconPenTool />}> Review </Button>
 
             </Box>
 
-            <ToggleButton
-              value="check"
-              color='info'
-              selected={selected}
-              onClick={() => {
-                offer();
-              }}
-              size="small"
-            >
-              <HandshakeOutlined /> Offer 
-            </ToggleButton>
             <h1> </h1>
-            <Link to="/FindingGroupmates" style={{ textDecoration: 'none' }}>
-              <Button colour="primary" variant="contained" startIcon={<IconSkipBack />}>Go back to Finding Groupmates</Button>
+            <Link to="/YourProjects" style={{ textDecoration: 'none' }}>
+              <Button colour="primary" variant="contained" startIcon={<IconSkipBack />}>Go back to Your Projects</Button>
             </Link>
         </div>
     ) 
 }
 
-export default ViewProfile
+export default ViewProfileYourProjects

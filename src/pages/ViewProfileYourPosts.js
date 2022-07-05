@@ -7,9 +7,9 @@ import { Chat } from "@material-ui/icons";
 import * as React from 'react';
 
 
-function ViewProfile1() {
+function ViewProfileYourPosts() {
     const { type } = useParams()
-    const { OfferUserId } = useLocation().state;
+    const { UserId } = useLocation().state;
 
     const [data, setData] = useState('')
     const [avatarUrl, setAvatarUrl] = useState(null)
@@ -21,7 +21,7 @@ function ViewProfile1() {
       }, [])
 
     async function getProfile() {
-      const { data } = await supabase.from('profiles').select('*').eq('id', OfferUserId).single()
+      const { data } = await supabase.from('profiles').select('*').eq('id', UserId).single()
 
       if (data) {
         setData(data)
@@ -85,4 +85,4 @@ function ViewProfile1() {
     ) 
 }
 
-export default ViewProfile1
+export default ViewProfileYourPosts
