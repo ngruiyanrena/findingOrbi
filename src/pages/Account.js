@@ -72,8 +72,15 @@ function Account() {
       <h2> </h2>
 
       <Link to="/EditAccount" style={{ textDecoration: 'none' }}><Button variant="contained" color="primary" startIcon={<Edit />}>Edit Profile</Button></Link>
-      <h2> </h2>
+     {"   "}
+      <Link style={{ textDecoration: 'none' }} to={{
+                        pathname: "/Review", 
+                        state: {userid: session.user.id}
+                    }}>
+                        <Button variant="contained" color="primary">View Reviews</Button>
+                    </Link>
       <div/>
+      <h2> </h2>
       <Link to="/" style={{ textDecoration: 'none' }}><Button size='small' variant='contained' onClick={() => supabase.auth.signOut()}>LogOut</Button></Link>
 
     </div>
