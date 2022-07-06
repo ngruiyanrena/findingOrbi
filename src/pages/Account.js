@@ -3,6 +3,17 @@ import { Button } from "@material-ui/core";
 import { Link } from 'react-router-dom';
 import { Edit } from '@material-ui/icons';
 import { useState, useEffect } from 'react'
+import { ReviewsSharp } from '@mui/icons-material';
+
+import * as React from 'react';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
+import Box from "../component/Box";
+import Rating from '@mui/material/Rating';
 
 
 function Account() {
@@ -51,6 +62,40 @@ function Account() {
     }
   }
 
+  // reviews 
+  const [open, setOpen] = useState(false);
+  const [reviews, setReviews] = useState([])
+
+  function handleClickOpen() {
+    setOpen(true)
+  }
+
+  function handleClose() {
+    setOpen(false)
+  }
+  
+  const descriptionElementRef = React.useRef(null);
+  useEffect(() => {
+    if (open) {
+      const { current: descriptionElement } = descriptionElementRef;
+      if (descriptionElement !== null) {
+        descriptionElement.focus();
+      }
+    }
+  }, [open]);
+
+  useEffect(() => {
+    fetchReviews()
+  }, [])
+
+  async function fetchReviews() {
+    const { data } = await supabase
+        .from('reviews')
+        .select('*') 
+        .eq('reviewee', session.user.id) 
+    setReviews(data)
+  }
+
   return (
     <div style={{height: "100vh"}}>
 
@@ -72,14 +117,41 @@ function Account() {
       <h2> </h2>
 
       <Link to="/EditAccount" style={{ textDecoration: 'none' }}><Button variant="contained" color="primary" startIcon={<Edit />}>Edit Profile</Button></Link>
-     {"   "}
-      <Link style={{ textDecoration: 'none' }} to={{
-                        pathname: "/Review", 
-                        state: {userid: session.user.id}
-                    }}>
-                        <Button variant="contained" color="primary">View Reviews</Button>
-                    </Link>
+     {" "}
+      
+      <Button variant="contained" color="primary" startIcon={<ReviewsSharp />} onClick={() => handleClickOpen()}>View Reviews</Button>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        scroll='paper'
+        aria-labelledby="scroll-dialog-title"
+        aria-describedby="scroll-dialog-description"
+      >
+        <DialogTitle id="scroll-dialog-title">Reviews</DialogTitle>
+        <DialogContent dividers={true}>
+          <DialogContentText
+            id="scroll-dialog-description"
+            ref={descriptionElementRef}
+            tabIndex={-1}
+          >
+            {reviews.map((review) => (
+              <div>
+                <Box>
+                  <Rating name="read-only" precision={0.5} value={review.rate} readOnly />
+                  <p><strong>Module Code:</strong> {review.moduleCode}</p>
+                  <p><strong>Feedback:</strong> {review.content}</p>
+                </Box>
+              </div> 
+            ))} 
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => handleClose()}>Close</Button>
+        </DialogActions>
+      </Dialog>
+
       <div/>
+
       <h2> </h2>
       <Link to="/" style={{ textDecoration: 'none' }}><Button size='small' variant='contained' onClick={() => supabase.auth.signOut()}>LogOut</Button></Link>
 

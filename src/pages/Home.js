@@ -32,7 +32,7 @@ function Home() {
         <Route path="/YourPosts/ViewProfile" component={ViewProfileYourPosts} />
         <Route path="/YourProjects/ViewGroupmatesProfiles" component={ViewProfileYourProjects} />
         <Route path="/YourProjects/ViewProfile" component={ViewProfilePendingProjects} />
-        <Route path="/Review" component={Review} />
+        <Route path="/Account/Reviews" component={Review} />
         
       </Switch>
     </Router>

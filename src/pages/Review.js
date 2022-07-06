@@ -24,17 +24,26 @@ function Review() {
     return (
       <div>
       <h1>Reviews: </h1>
-      {reviews.filter(review => {
+      {/* {reviews.filter(review => {
           return review;
         }).map((review, id) => (
           <div key={review.id}>
             <Box>
-            <Rating name="read-only" value={review.rate} readOnly />
+              <Rating name="read-only" value={review.rate} readOnly />
               <p><strong>Module Code:</strong> {review.moduleCode}</p>
               <p><strong>Feedback:</strong> {review.content}</p>
             </Box>
-        </div>
-            ))} 
+          </div>
+      ))}  */}
+      {reviews.map((review) => (
+          <div key={review.id}>
+            <Box>
+              <Rating name="read-only" value={review.rate} readOnly />
+              <p><strong>Module Code:</strong> {review.moduleCode}</p>
+              <p><strong>Feedback:</strong> {review.content}</p>
+            </Box>
+          </div>
+      ))} 
             {/* <div> 
                 <Link to="/Account" style={{ textDecoration: 'none' }}>
                   <Button variant="contained">Return to Profile</Button>
