@@ -177,6 +177,7 @@ function ViewProfileYourProjects() {
               </a> 
 
               {" "}
+              
               <Button variant="contained" color="primary" startIcon={<ReviewsSharp />} onClick={() => handleClickOpen2()}>View Reviews</Button>
               <Dialog
                 open={open2}
@@ -209,6 +210,7 @@ function ViewProfileYourProjects() {
               </Dialog>
 
               <h1> </h1>
+
               <Button variant="outlined" color="primary" startIcon={<IconPenTool />} onClick={() => handleClickOpen()}>
                 Leave A Review
               </Button>
