@@ -17,7 +17,9 @@ import { IconUser } from "@supabase/ui";
 
 import IconButton from '@mui/material/IconButton';
 import { Cancel, Check } from '@material-ui/icons';
-
+import Alert from '@mui/material/Alert';
+import Collapse from '@mui/material/Collapse';
+import CloseIcon from '@mui/icons-material/Close';
 
 function YourPosts() {
     // const session = supabase.auth.session()
@@ -25,6 +27,7 @@ function YourPosts() {
     const [posts, setPosts] = useState([])
     const [post, setPost] = useState({ ModuleCode: "", MemberNo: "", WorkStylePref1: "", WorkStylePref2: "", WorkStylePref3: "", WorkStylePref4: "", WorkStylePref5: "", UserId: user.id})
     const { ModuleCode, MemberNo, WorkStylePref1, WorkStylePref2, WorkStylePref3, WorkStylePref4, WorkStylePref5, UserId } = post 
+    const [success, setSuccess] = React.useState(false)
 
     useEffect(() => {
         fetchPosts()
@@ -70,6 +73,7 @@ function YourPosts() {
         resetRadioState3();
         resetRadioState4();
         resetRadioState5();
+        setSuccess(true);
     }
 
     const [q1, setq1] = useState('')
@@ -148,9 +152,30 @@ function YourPosts() {
         fetchPosts()
     }
 
+
     return (
-        <div> 
+        <div > 
             <h1>Your Posts</h1>
+
+                <Collapse in={success}>
+                <Alert 
+                    action={
+                    <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                            setSuccess(false);
+                        }}
+                    >
+                        <CloseIcon fontSize="inherit" />
+                    </IconButton>
+                    }
+                    sx={{ mb: 2 }}
+                >
+                    New Post Successfully Created!
+                </Alert>
+                </Collapse>
 
             <Box>
                 <h2> New Post </h2>
