@@ -233,10 +233,13 @@ function ViewProfilePendingProjects() {
             >
               <HandshakeOutlined /> Offer 
             </ToggleButton>
+
             <h1> </h1>
+
             <Link to="/YourProjects" style={{ textDecoration: 'none' }}>
               <Button colour="primary" variant="contained" startIcon={<IconSkipBack />}>Go back to Pending Projects</Button>
             </Link>
+            
         </div>
     ) 
 }

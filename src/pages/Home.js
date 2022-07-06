@@ -13,7 +13,6 @@ import YourProjects from "./YourProjects";
 import ViewProfileYourProjects from "./ViewProfileYourProjects";
 import ViewProfileYourPosts from "./ViewProfileYourPosts";
 import ViewProfilePendingProjects from "./ViewProfilePendingProjects";
-import Review from "./Review";
 
 function Home() {
 
@@ -32,8 +31,6 @@ function Home() {
         <Route path="/YourPosts/ViewProfile" component={ViewProfileYourPosts} />
         <Route path="/YourProjects/ViewGroupmatesProfiles" component={ViewProfileYourProjects} />
         <Route path="/YourProjects/ViewProfile" component={ViewProfilePendingProjects} />
-        <Route path="/Account/Reviews" component={Review} />
-        
       </Switch>
     </Router>
   );
