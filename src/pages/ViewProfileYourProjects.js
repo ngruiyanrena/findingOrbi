@@ -16,7 +16,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Rating from '@mui/material/Rating';
-
+import { ReviewsSharp } from '@mui/icons-material';
+import Alert from '@mui/material/Alert';
 
 function ViewProfileYourProjects() {
     const { type } = useParams()
@@ -58,6 +59,7 @@ function ViewProfileYourProjects() {
     useEffect(() => {
       if (info.availableDay) getAvailableDays(info.availableDay)
       if (info.avatar_url) downloadImage(info.avatar_url)
+      if (info.id) fetchReviews(info.id)
     }, [info])
 
     function getAvailableDays(profileInfo) {
@@ -99,15 +101,45 @@ function ViewProfileYourProjects() {
           .single()
       setReview({ reviewer: session.user.id, reviewee: info.id, moduleCode: MC, content: "", rate: 0})
       setOpen(false);
-  }
+    }
 
-    const handleClickOpen = () => {
+    function handleClickOpen() {
       setOpen(true);
-    };
-  
-    const handleClose = () => {
-      setOpen(false);
-    };
+    }
+
+    function handleClose() {
+      setOpen(false)
+    }
+
+    // reviews 
+    const [open2, setOpen2] = useState(false);
+    const [reviews2, setReviews2] = useState([])
+
+    function handleClickOpen2() {
+      setOpen2(true)
+    }
+
+    function handleClose2() {
+      setOpen2(false)
+    }
+    
+    const descriptionElementRef = React.useRef(null);
+    useEffect(() => {
+      if (open2) {
+        const { current: descriptionElement } = descriptionElementRef;
+        if (descriptionElement !== null) {
+          descriptionElement.focus();
+        }
+      }
+    }, [open2]);
+
+    async function fetchReviews(user) {
+      const { data } = await supabase
+          .from('reviews')
+          .select('*') 
+          .eq('reviewee', user) 
+      setReviews2(data)
+    }
 
     return (
         <div style={{height: "100vh"}}>
@@ -119,7 +151,7 @@ function ViewProfileYourProjects() {
       
               profiles ? profiles.map((profile) => (
                 <div>  
-                <Button variant="outlined" onClick={() => setInfo(profile)}> View Profile of Groupmate {profiles.indexOf(profile) + 1} </Button>
+                <Button variant="outlined" onClick={() => setInfo(profile)}> Click to View Profile of Groupmate {profiles.indexOf(profile) + 1} </Button>
                 </div>
               )) : "" 
               
@@ -145,9 +177,40 @@ function ViewProfileYourProjects() {
               </a> 
 
               {" "}
+              <Button variant="contained" color="primary" startIcon={<ReviewsSharp />} onClick={() => handleClickOpen2()}>View Reviews</Button>
+              <Dialog
+                open={open2}
+                onClose={handleClose2}
+                scroll='paper'
+                aria-labelledby="scroll-dialog-title"
+                aria-describedby="scroll-dialog-description"
+              >
+                <DialogTitle id="scroll-dialog-title">Reviews</DialogTitle>
+                <DialogContent dividers={true}>
+                  <DialogContentText
+                    id="scroll-dialog-description"
+                    ref={descriptionElementRef}
+                    tabIndex={-1}
+                  >
+                    {reviews2.map((review2) => (
+                      <div>
+                        <Box>
+                          <Rating name="read-only" precision={0.5} value={review2.rate} readOnly />
+                          <p><strong>Module Code:</strong> {review2.moduleCode}</p>
+                          <p><strong>Feedback:</strong> {review2.content}</p>
+                        </Box>
+                      </div> 
+                    ))} 
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={() => handleClose2()}>Close</Button>
+                </DialogActions>
+              </Dialog>
 
-              <Button variant="outlined" color="primary" startIcon={<IconPenTool />} onClick={handleClickOpen}>
-                Review
+              <h1> </h1>
+              <Button variant="outlined" color="primary" startIcon={<IconPenTool />} onClick={() => handleClickOpen()}>
+                Leave A Review
               </Button>
               <Dialog fullWidth={true} open={open} onClose={handleClose}>
                 <DialogTitle>Leave A Review</DialogTitle>
@@ -165,9 +228,10 @@ function ViewProfileYourProjects() {
                       onChange={e => setReview({...review,  content: e.target.value})}
                   />
                 </DialogContent>
+                <Alert severity="warning">Do note that any inappropriate reviews will be taken down</Alert>
                 <DialogActions>
-                  <Button onClick={handleClose}>Cancel</Button>
-                  <Button onClick={submitReview}>Submit</Button>
+                  <Button onClick={() => handleClose()}>Cancel</Button>
+                  <Button onClick={() => submitReview()}>Submit</Button>
                 </DialogActions>
               </Dialog>
 

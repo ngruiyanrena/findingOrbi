@@ -10,6 +10,13 @@ import * as React from 'react';
 import Box from "../component/Box";
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Rating from '@mui/material/Rating';
+import { ReviewsSharp } from '@mui/icons-material';
 
 
 function ViewProfile() {
@@ -46,6 +53,7 @@ function ViewProfile() {
     useEffect(() => {
       if (info.availableDay) getAvailableDays(info.availableDay)
       if (info.avatar_url) downloadImage(info.avatar_url)
+      if (info.id) fetchReviews(info.id)
     }, [info])
 
     function getAvailableDays(profileInfo) {
@@ -116,6 +124,36 @@ function ViewProfile() {
         .eq('id', PostId)
     }
 
+     // reviews 
+    const [open, setOpen] = useState(false);
+    const [reviews, setReviews] = useState([])
+
+    function handleClickOpen() {
+      setOpen(true)
+    }
+
+    function handleClose() {
+      setOpen(false)
+    }
+    
+    const descriptionElementRef = React.useRef(null);
+    useEffect(() => {
+      if (open) {
+        const { current: descriptionElement } = descriptionElementRef;
+        if (descriptionElement !== null) {
+          descriptionElement.focus();
+        }
+      }
+    }, [open]);
+
+    async function fetchReviews(user) {
+      const { data } = await supabase
+          .from('reviews')
+          .select('*') 
+          .eq('reviewee', user) 
+      setReviews(data)
+    }
+
     return (
         <div style={{minheight: "100vh"}}>
             <h1> View Profile(s) </h1>
@@ -125,7 +163,7 @@ function ViewProfile() {
       
               profiles ? profiles.map((profile) => (
                 <div>  
-                <Button variant="outlined" onClick={() => setInfo(profile)}> View Profile of Groupmate {profiles.indexOf(profile) + 1} </Button>
+                <Button variant="outlined" onClick={() => setInfo(profile)}> Click to View Profile of Groupmate {profiles.indexOf(profile) + 1} </Button>
                 </div>
               )) : "" 
               
@@ -149,14 +187,38 @@ function ViewProfile() {
             <a href={"https://telegram.me/"+info.username} rel="noopener noreferrer" target="_blank" style={{ textDecoration: 'none' }}>
               <Button variant="contained" color="primary" startIcon={<Chat />}>Chat</Button>
               {"   "}
-      <Link style={{ textDecoration: 'none' }} to={{
-                        pathname: "/Review", 
-                        state: {userid: info.id}
-                    }}>
-                        <Button variant="contained" color="primary">View Reviews</Button>
-                    </Link>
             </a> 
 
+            <Button variant="contained" color="primary" startIcon={<ReviewsSharp />} onClick={() => handleClickOpen()}>View Reviews</Button>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              scroll='paper'
+              aria-labelledby="scroll-dialog-title"
+              aria-describedby="scroll-dialog-description"
+            >
+              <DialogTitle id="scroll-dialog-title">Reviews</DialogTitle>
+              <DialogContent dividers={true}>
+                <DialogContentText
+                  id="scroll-dialog-description"
+                  ref={descriptionElementRef}
+                  tabIndex={-1}
+                >
+                  {reviews.map((review) => (
+                    <div>
+                      <Box>
+                        <Rating name="read-only" precision={0.5} value={review.rate} readOnly />
+                        <p><strong>Module Code:</strong> {review.moduleCode}</p>
+                        <p><strong>Feedback:</strong> {review.content}</p>
+                      </Box>
+                    </div> 
+                  ))} 
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={() => handleClose()}>Close</Button>
+              </DialogActions>
+            </Dialog>
             </Box>
 
             <ToggleButton
