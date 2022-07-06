@@ -148,6 +148,13 @@ function ViewProfilePendingProjects() {
             
             <a href={"https://telegram.me/"+info.username} rel="noopener noreferrer" target="_blank" style={{ textDecoration: 'none' }}>
               <Button variant="contained" color="primary" startIcon={<Chat />}>Chat</Button>
+              {"   "}
+      <Link style={{ textDecoration: 'none' }} to={{
+                        pathname: "/Review", 
+                        state: {userid: info.id}
+                    }}>
+                        <Button variant="contained" color="primary">View Reviews</Button>
+                    </Link>
             </a> 
 
             </Box>

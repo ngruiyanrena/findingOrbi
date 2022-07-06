@@ -76,6 +76,13 @@ function ViewProfileYourPosts() {
             <h1> </h1>
             <a href={"https://telegram.me/"+data.username} rel="noopener noreferrer" target="_blank" style={{ textDecoration: 'none' }}>
               <Button variant="contained" color="primary" startIcon={<Chat />}>Chat</Button>
+              {"   "}
+      <Link style={{ textDecoration: 'none' }} to={{
+                        pathname: "/Review", 
+                        state: {userid: data.id}
+                    }}>
+                        <Button variant="contained" color="primary">View Reviews</Button>
+                    </Link>
             </a> 
             <h1> </h1>
             <Link to="/YourPosts" style={{ textDecoration: 'none' }}>
