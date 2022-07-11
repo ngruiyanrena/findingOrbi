@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(5),
     align: "right",
     "&:hover": {
-      color: "pink",
+      color: "blue",
       borderBottom: "1px solid white",
     },
   },
