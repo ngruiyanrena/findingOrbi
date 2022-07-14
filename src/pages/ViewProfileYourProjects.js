@@ -59,6 +59,7 @@ function ViewProfileYourProjects() {
     useEffect(() => {
       if (info.availableDay) getAvailableDays(info.availableDay)
       if (info.avatar_url) downloadImage(info.avatar_url)
+      if (!info.avatar_url) setAvatarUrl(`https://artscimedia.case.edu/wp-content/uploads/sites/79/2016/12/14205134/no-user-image.gif`)
       if (info.id) fetchReviews(info.id)
     }, [info])
 
