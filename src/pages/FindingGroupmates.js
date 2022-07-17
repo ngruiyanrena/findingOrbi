@@ -53,7 +53,7 @@ function FindingGroupmates() {
       <div class="flex-child"> 
       <Box> 
         <h1>Filter </h1>
-        <p>Input your preferences for each following work style field</p>
+        <p>Input your own work style</p>
         <p> Feel free to leave it blank if you have no preference!</p>
         <Input 
           label= "Team Member / Team Leader"
