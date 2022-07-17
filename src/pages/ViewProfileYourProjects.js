@@ -17,7 +17,16 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Rating from '@mui/material/Rating';
 import { ReviewsSharp } from '@mui/icons-material';
+
+import Box1 from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
+import IconButton from '@mui/material/IconButton';
+import Collapse from '@mui/material/Collapse';
+import CloseIcon from '@mui/icons-material/Close';
+
+
+
+
 
 function ViewProfileYourProjects() {
     const { type } = useParams()
@@ -28,10 +37,42 @@ function ViewProfileYourProjects() {
     const [ days, setDays ] = useState('')
     const [avatarUrl, setAvatarUrl] = useState(null)
     const session = supabase.auth.session()
+    const [have, setHave] = useState(null)
+    const [listdata, setList] = useState([])
+
 
     const [ MC, setMC ] = useState('')
     const [review, setReview] = useState({ reviewer: session.user.id, reviewee: info.id, moduleCode: MC, content: "", rate: 0})
     const { reviewer, reviewee, moduleCode, content, rate } = review 
+    const [clickedsubmit, setClickedsubmit] = useState(false)
+    
+
+
+    useEffect(() => {
+      fetchListdata()
+    }, [])
+
+
+  async function fetchListdata() {
+      const { data } = await supabase
+          .from('reviews')
+          .select('*') 
+      setList(data)
+  }
+
+
+  async function haveReview() {
+    setHave(false)
+    console.log(session.user.id)
+    console.log(info.id)
+    console.log(MC)
+    for (let i = 0; i < listdata.length; i++) {
+      if (listdata[i].reviewer === session.user.id && listdata[i].reviewee === info.id && listdata[i].moduleCode === MC) {
+        setHave(true)
+        console.log(session.user.id)
+      }
+    }
+  }
 
     useEffect(() => {
         getProfiles()
@@ -55,8 +96,9 @@ function ViewProfileYourProjects() {
       }
       setProfiles(profiles)
     }
-
+   
     useEffect(() => {
+      haveReview()
       if (info.availableDay) getAvailableDays(info.availableDay)
       if (info.avatar_url) downloadImage(info.avatar_url)
       if (!info.avatar_url) setAvatarUrl(`https://artscimedia.case.edu/wp-content/uploads/sites/79/2016/12/14205134/no-user-image.gif`)
@@ -94,21 +136,37 @@ function ViewProfileYourProjects() {
     const [open, setOpen] = React.useState(false);
 
     async function submitReview() {
-      await supabase
-          .from('reviews') //insert individual post input by the user
-          .insert([
-          {reviewer, reviewee: info.id, moduleCode: MC, content, rate} 
-          ])
-          .single()
+      haveReview()
+      setClickedsubmit(true)
+      if (have) {
+          <Stack sx={{ width: '100%' }} spacing={2}>
+          <Alert severity="warning">
+          This is a warning alert — <strong>check it out!</strong>
+          </Alert>
+          </Stack>
+      } else {
+        await supabase
+        .from('reviews') //insert individual post input by the user
+        .insert([
+        {reviewer, reviewee: info.id, moduleCode: MC, content, rate} 
+        ])
+        .single()
+      }
       setReview({ reviewer: session.user.id, reviewee: info.id, moduleCode: MC, content: "", rate: 0})
+      setHave(true)
+      fetchListdata()
       setOpen(false);
     }
+    
+    console.log(listdata)
+    console.log(have)
 
     function handleClickOpen() {
       setOpen(true);
     }
 
     function handleClose() {
+      setReview({ reviewer: session.user.id, reviewee: info.id, moduleCode: MC, content: "", rate: 0})
       setOpen(false)
     }
 
@@ -142,6 +200,12 @@ function ViewProfileYourProjects() {
       setReviews2(data)
     }
 
+    // async function finalClick(profile) {
+    //   setInfo(profile);
+    //   console.log(info.id)
+    //   haveReview();
+    // }
+
     return (
         <div style={{height: "100vh"}}>
 
@@ -158,6 +222,34 @@ function ViewProfileYourProjects() {
               
             }
             </Stack>
+
+            <h1></h1>
+
+            <Box1 sx={{ 
+        //display: 'flex',
+        //alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%'}}>
+            <Collapse in={clickedsubmit && have}>
+      <Alert severity="warning"
+          action={
+            <IconButton
+              aria-label="close"
+              size="small"
+              onClick={() => {
+                setClickedsubmit(false);
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
+          sx={{ mb: 2 }}
+        >
+          Review submitted before
+        </Alert>
+      </Collapse>
+      </Box1>
+   
 
             <Box> 
 
@@ -239,6 +331,9 @@ function ViewProfileYourProjects() {
               </Dialog>
 
             </Box>
+
+            
+      
 
             <h1> </h1>
             <Link to="/YourProjects" style={{ textDecoration: 'none' }}>
