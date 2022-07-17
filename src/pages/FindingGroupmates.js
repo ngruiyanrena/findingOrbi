@@ -16,6 +16,7 @@ function FindingGroupmates() {
   const [workingStyle3, setWorkingStyle3] = useState("")
   const [workingStyle4, setWorkingStyle4] = useState("")
   const [workingStyle5, setWorkingStyle5] = useState("")
+  
   const session = supabase.auth.session()
 
   useEffect(() => {
@@ -34,48 +35,60 @@ function FindingGroupmates() {
     <div className="App">
       <h1>Find Your Groupmates</h1>
 
-      <Box>
-        <h1>Search </h1>
+      <div class="flex-container">
+
+      {/* style={{width:"50%", marginLeft:"80px"}} */}
+      <div class="flex-child" > 
+      <Box> 
+        <h1>Search</h1>
         <Input 
           placeholder="Search Module Code here" 
           onChange={event => setQuery(event.target.value)}
           icon={<IconSearch />}
         />
+      </Box>
+      </div>
 
+      {/* style={{width:"50%", float:'right'}} */}
+      <div class="flex-child"> 
+      <Box> 
         <h1>Filter </h1>
-        <h3>Input your preferences for each following work style field</h3>
+        <p>Input your own work style</p>
         <p> Feel free to leave it blank if you have no preference!</p>
         <Input 
-        label= "Team Member / Team Leader"
-          placeholder="eg: Team Member" 
+          label= "Team Member / Team Leader"
+          placeholder="eg. Team Member" 
           onChange={event => setWorkingStyle1(event.target.value)}
-          />
-          <h1></h1>
-           <Input 
-        label= "Supportive / Take Charge"
-          placeholder="eg: Supportive" 
+          descriptionText=" "
+        />
+        <Input 
+          label= "Supportive / Take Charge"
+          placeholder="eg. Supportive" 
           onChange={event => setWorkingStyle2(event.target.value)}
-          />
-           <h1></h1>
-         <Input 
-        label= "Organised / Spontaneous"
-          placeholder="eg: Organised" 
+          descriptionText=" "
+        />
+        <Input 
+          label= "Organised / Spontaneous"
+          placeholder="eg. Organised" 
           onChange={event => setWorkingStyle3(event.target.value)}
-          />
-           <h1></h1>
-         <Input 
-        label= "Detail Oriented / Broad Perspective "
-          placeholder="eg: Detail Oriented" 
+          descriptionText=" "
+        />
+        <Input 
+          label= "Detail Oriented / Broad Perspective "
+          placeholder="eg. Detail Oriented" 
           onChange={event => setWorkingStyle4(event.target.value)}
-          />
-           <h1></h1>
-         <Input 
-        label= "Creative / Strategic"
-          placeholder="eg: Creative" 
+          descriptionText=" "
+        />
+        <Input 
+          label= "Creative / Strategic"
+          placeholder="eg. Creative" 
           onChange={event => setWorkingStyle5(event.target.value)}
-          />
+          descriptionText=" "
+        />
 
       </Box>
+      </div>
+      </div>
 
       {posts.filter(post => {
         if (query === '' && workingStyle1 === '' && workingStyle2 === '' && workingStyle3 === '' && 
@@ -105,7 +118,6 @@ function FindingGroupmates() {
             </Box>
           </div>
       ))} 
-
     </div>
   );
 }

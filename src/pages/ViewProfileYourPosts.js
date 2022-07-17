@@ -14,6 +14,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Rating from '@mui/material/Rating';
 import { ReviewsSharp } from '@mui/icons-material';
 import Box from "../component/Box";
+import Box2 from "../component/Box2";
 
 
 
@@ -131,11 +132,11 @@ function ViewProfileYourPosts() {
                 >
                   {reviews.map((review) => (
                     <div>
-                      <Box>
+                      <Box2>
                         <Rating name="read-only" precision={0.5} value={review.rate} readOnly />
                         <p><strong>Module Code:</strong> {review.moduleCode}</p>
                         <p><strong>Feedback:</strong> {review.content}</p>
-                      </Box>
+                      </Box2>
                     </div> 
                   ))} 
                 </DialogContentText>

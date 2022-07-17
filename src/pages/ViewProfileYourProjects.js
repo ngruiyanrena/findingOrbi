@@ -6,6 +6,7 @@ import { supabase } from '../client';
 import { Chat } from "@material-ui/icons";
 import * as React from 'react';
 import Box from "../component/Box";
+import Box2 from "../component/Box2";
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 
@@ -83,7 +84,7 @@ function ViewProfileYourProjects() {
       const { data : post } = await supabase.from('posts').select('*').eq('id', PostId).single()
       setMC(post.ModuleCode)
       let profiles = []
-      if (profileUserId) {
+      if (profileUserId.id !== session.user.id) {
         profiles.push(profileUserId)
       }
       if (post.AcceptUserIds) {
@@ -288,11 +289,11 @@ function ViewProfileYourProjects() {
                   >
                     {reviews2.map((review2) => (
                       <div>
-                        <Box>
+                        <Box2>
                           <Rating name="read-only" precision={0.5} value={review2.rate} readOnly />
                           <p><strong>Module Code:</strong> {review2.moduleCode}</p>
                           <p><strong>Feedback:</strong> {review2.content}</p>
-                        </Box>
+                        </Box2>
                       </div> 
                     ))} 
                   </DialogContentText>

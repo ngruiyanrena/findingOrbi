@@ -9,11 +9,13 @@ import { IconUser } from "@supabase/ui";
 function YourProjects() {
     const [acceptedPosts, setAcceptedPosts] = useState([])
     const [offerPosts, setOfferPosts] = useState([])
+    const [yourPosts, setYourPosts] = useState([])
     const session = supabase.auth.session()
 
     useEffect(() => {
         fetchAcceptedPosts()
         fetchOfferPosts()
+        fetchYourPosts()
     }, [])
 
     async function fetchAcceptedPosts() {
@@ -31,6 +33,15 @@ function YourProjects() {
             .contains('OffersUserIds', [session.user.id]) 
         setOfferPosts(data)
     }
+
+    async function fetchYourPosts() {
+        const { data } = await supabase
+            .from('posts')
+            .select('*') 
+            .eq('UserId', session.user.id) 
+        setYourPosts(data)
+    }
+
     return (
         <div style={{minheight: "100vh"}}>
         <h1>Your Projects</h1>
@@ -40,7 +51,7 @@ function YourProjects() {
             <div key={acceptedPost.id}> 
                 <Box>
                     <p><strong>Module Code:</strong> {acceptedPost.ModuleCode}</p>
-                    <p><strong>Number of Groupmates</strong> (including yourself): <strong>{acceptedPost.AcceptUserIds.length + 1} </strong> member(s)</p>
+                    <p><strong>Current Number of Groupmates</strong> (including yourself): <strong>{acceptedPost.AcceptUserIds.length + 1} </strong> member(s)</p>
                     <Link style={{ textDecoration: 'none' }} to={{
                         pathname: "/YourProjects/ViewGroupmatesProfiles", 
                         state: {UserId: acceptedPost.UserId, PostId: acceptedPost.id}
@@ -50,6 +61,21 @@ function YourProjects() {
                 </Box>
             </div>
         ))}
+        {yourPosts.map((yourPost) => (
+            <div key={yourPost.id}> 
+                <Box>
+                    <p><strong>Module Code:</strong> {yourPost.ModuleCode}</p>
+                    <p><strong>Current Number of Groupmates</strong> (including yourself): <strong>{yourPost.AcceptUserIds.length + 1} </strong> member(s)</p>
+                    <Link style={{ textDecoration: 'none' }} to={{
+                        pathname: "/YourProjects/ViewGroupmatesProfiles", 
+                        state: {UserId: yourPost.UserId, PostId: yourPost.id}
+                    }}>
+                        <Button size="small" variant="contained" startIcon={<IconUser />}>View Profile(s) of Groupmates</Button>
+                    </Link>
+                </Box>
+            </div>
+        ))}
+
 
         <h2>Pending Projects</h2>
         {offerPosts.map((offerPost) => (

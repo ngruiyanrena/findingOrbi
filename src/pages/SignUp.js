@@ -6,11 +6,16 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import { Email } from '@material-ui/icons';
 import { PasswordRounded } from '@mui/icons-material';
+import Alert from '@mui/material/Alert';
+import IconButton from '@mui/material/IconButton';
+import Collapse from '@mui/material/Collapse';
+import CloseIcon from '@mui/icons-material/Close';
 
 function SignUp() {
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [open, setOpen] = useState(false);
 
   const handleSignUp = async () => {
     try {
@@ -19,6 +24,7 @@ function SignUp() {
           email: email, 
           password: password })
       if (error) throw error
+      setOpen(true)
     } catch (error) {
       alert(error.error_description || error.message)
     } finally {
@@ -32,8 +38,29 @@ function SignUp() {
         <h1>Welcome to Finding Orbi! </h1>
         <p>Sign up with your email and a password below</p>
         {loading ? (
-          'Creating an account ...'
+          "Creating an account ..."
         ) : (
+          <div> 
+          <Collapse in={open}>
+            <Alert
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              }
+              sx={{ mb: 2 }}
+            >
+              A link has been sent. Please check your email to verify your email address. 
+            </Alert>
+          </Collapse>
+              
           <form onSubmit={e => e.preventDefault()}>
             <TextField 
               margin="normal" 
@@ -72,6 +99,7 @@ function SignUp() {
             <h1> </h1>
             <Button variant="contained" onClick={handleSignUp}>Sign Up</Button>
           </form>
+          </div>
         )}
       </div>
       <h1> </h1>

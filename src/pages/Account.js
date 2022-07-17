@@ -13,6 +13,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import Box from "../component/Box";
+import Box2 from "../component/Box2";
 import Rating from '@mui/material/Rating';
 
 
@@ -136,11 +137,11 @@ function Account() {
           >
             {reviews.map((review) => (
               <div>
-                <Box>
+                <Box2>
                   <Rating name="read-only" precision={0.5} value={review.rate} readOnly />
                   <p><strong>Module Code:</strong> {review.moduleCode}</p>
                   <p><strong>Feedback:</strong> {review.content}</p>
-                </Box>
+                </Box2>
               </div> 
             ))} 
           </DialogContentText>
