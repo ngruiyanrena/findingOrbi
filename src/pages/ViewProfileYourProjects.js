@@ -30,182 +30,169 @@ import CloseIcon from '@mui/icons-material/Close';
 
 
 function ViewProfileYourProjects() {
-    const { type } = useParams()
-    const { UserId, PostId } = useLocation().state;
+  const { type } = useParams()
+  const { UserId, PostId } = useLocation().state;
 
-    const [info, setInfo] = useState('')
-    const [profiles, setProfiles] = useState('')
-    const [ days, setDays ] = useState('')
-    const [avatarUrl, setAvatarUrl] = useState(null)
-    const session = supabase.auth.session()
-    const [have, setHave] = useState(null)
-    const [listdata, setList] = useState([])
-
-
-    const [ MC, setMC ] = useState('')
-    const [review, setReview] = useState({ reviewer: session.user.id, reviewee: info.id, moduleCode: MC, content: "", rate: 0})
-    const { reviewer, reviewee, moduleCode, content, rate } = review 
-    const [clickedsubmit, setClickedsubmit] = useState(false)
-    
+  const [info, setInfo] = useState('')
+  const [profiles, setProfiles] = useState('')
+  const [ days, setDays ] = useState('')
+  const [avatarUrl, setAvatarUrl] = useState(null)
+  const session = supabase.auth.session()
+  const [have, setHave] = useState(null)
+  const [listdata, setList] = useState([])
 
 
-    useEffect(() => {
-      fetchListdata()
-    }, [])
+  const [ MC, setMC ] = useState('')
+  const [review, setReview] = useState({ reviewer: session.user.id, reviewee: info.id, moduleCode: MC, content: "", rate: 0})
+  const { reviewer, reviewee, moduleCode, content, rate } = review 
+  const [clickedsubmit, setClickedsubmit] = useState(false)
+  
+
+
+  useEffect(() => {
+    fetchListdata()
+  }, [])
 
 
   async function fetchListdata() {
-      const { data } = await supabase
-          .from('reviews')
-          .select('*') 
-      setList(data)
+    const { data } = await supabase
+      .from('reviews')
+      .select('*') 
+    setList(data)
   }
 
 
   async function haveReview() {
     setHave(false)
-    console.log(session.user.id)
-    console.log(info.id)
-    console.log(MC)
     for (let i = 0; i < listdata.length; i++) {
       if (listdata[i].reviewer === session.user.id && listdata[i].reviewee === info.id && listdata[i].moduleCode === MC) {
         setHave(true)
-        console.log(session.user.id)
       }
     }
   }
 
-    useEffect(() => {
-        getProfiles()
-      }, [])
+  useEffect(() => {
+      getProfiles()
+    }, [])
 
-    async function getProfiles() {
-      const { data : profileUserId } = await supabase.from('profiles').select('*').eq('id', UserId).single()
-      const { data : post } = await supabase.from('posts').select('*').eq('id', PostId).single()
-      setMC(post.ModuleCode)
-      let profiles = []
-      if (profileUserId.id !== session.user.id) {
-        profiles.push(profileUserId)
-      }
-      if (post.AcceptUserIds) {
-        for (var i = 0; i < post.AcceptUserIds.length; i++) {
-          if (post.AcceptUserIds[i] !== session.user.id) {
-            const { data } = await supabase.from('profiles').select('*').eq('id', post.AcceptUserIds[i]).single()
-            profiles.push(data)
-          }
+  async function getProfiles() {
+    const { data : profileUserId } = await supabase.from('profiles').select('*').eq('id', UserId).single()
+    const { data : post } = await supabase.from('posts').select('*').eq('id', PostId).single()
+    setMC(post.ModuleCode)
+    let profiles = []
+    if (profileUserId.id !== session.user.id) {
+      profiles.push(profileUserId)
+    }
+    if (post.AcceptUserIds) {
+      for (var i = 0; i < post.AcceptUserIds.length; i++) {
+        if (post.AcceptUserIds[i] !== session.user.id) {
+          const { data } = await supabase.from('profiles').select('*').eq('id', post.AcceptUserIds[i]).single()
+          profiles.push(data)
         }
       }
-      setProfiles(profiles)
     }
+    setProfiles(profiles)
+  }
    
-    useEffect(() => {
-      haveReview()
-      if (info.availableDay) getAvailableDays(info.availableDay)
-      if (info.avatar_url) downloadImage(info.avatar_url)
-      if (!info.avatar_url) setAvatarUrl(`https://artscimedia.case.edu/wp-content/uploads/sites/79/2016/12/14205134/no-user-image.gif`)
-      if (info.id) fetchReviews(info.id)
-    }, [info])
+  useEffect(() => {
+    haveReview()
+    if (info.availableDay) getAvailableDays(info.availableDay)
+    if (info.avatar_url) downloadImage(info.avatar_url)
+    if (!info.avatar_url) setAvatarUrl(`https://artscimedia.case.edu/wp-content/uploads/sites/79/2016/12/14205134/no-user-image.gif`)
+    if (info.id) fetchReviews(info.id)
+  }, [info])
 
-    function getAvailableDays(profileInfo) {
-      let availDays = "";
-      let length = profileInfo.length
-      if (length === 0) {
-        setDays("")
-      } else {
-        for (let i = 0; i < length - 1; i++) {
-          availDays += profileInfo[i] + ", ";
-        }
-        availDays += profileInfo[length - 1]
-        setDays(availDays)
+  function getAvailableDays(profileInfo) {
+    let availDays = "";
+    let length = profileInfo.length
+    if (length === 0) {
+      setDays("")
+    } else {
+      for (let i = 0; i < length - 1; i++) {
+        availDays += profileInfo[i] + ", ";
       }
+      availDays += profileInfo[length - 1]
+      setDays(availDays)
     }
+  }
 
-    const downloadImage = async (path) => {
-      try {
-        const { data, error } = await supabase.storage.from('avatars').download(path)
-        if (error) {
-          throw error
-        }
-        const url = URL.createObjectURL(data)
-        setAvatarUrl(url)
-      } catch (error) {
-        console.log('Error downloading image: ', error.message)
+  const downloadImage = async (path) => {
+    try {
+      const { data, error } = await supabase.storage.from('avatars').download(path)
+      if (error) {
+        throw error
       }
+      const url = URL.createObjectURL(data)
+      setAvatarUrl(url)
+    } catch (error) {
+      console.log('Error downloading image: ', error.message)
     }
+  }
     
-    // Review button 
-    const [open, setOpen] = React.useState(false);
+  // Review button 
+  const [open, setOpen] = React.useState(false);
 
-    async function submitReview() {
-      haveReview()
-      setClickedsubmit(true)
-      if (have) {
-          <Stack sx={{ width: '100%' }} spacing={2}>
-          <Alert severity="warning">
-          This is a warning alert — <strong>check it out!</strong>
-          </Alert>
-          </Stack>
-      } else {
-        await supabase
-        .from('reviews') //insert individual post input by the user
-        .insert([
-        {reviewer, reviewee: info.id, moduleCode: MC, content, rate} 
-        ])
-        .single()
+  async function submitReview() {
+    haveReview()
+    setClickedsubmit(true)
+    if (have) {
+        <Stack sx={{ width: '100%' }} spacing={2}>
+        <Alert severity="warning">
+        This is a warning alert — <strong>check it out!</strong>
+        </Alert>
+        </Stack>
+    } else {
+      await supabase
+      .from('reviews') //insert individual post input by the user
+      .insert([
+      {reviewer, reviewee: info.id, moduleCode: MC, content, rate} 
+      ])
+      .single()
+    }
+    setReview({ reviewer: session.user.id, reviewee: info.id, moduleCode: MC, content: "", rate: 0})
+    setHave(true)
+    fetchListdata()
+    setOpen(false);
+  }
+
+  function handleClickOpen() {
+    setOpen(true);
+  }
+
+  function handleClose() {
+    setReview({ reviewer: session.user.id, reviewee: info.id, moduleCode: MC, content: "", rate: 0})
+    setOpen(false)
+  }
+
+  // reviews 
+  const [open2, setOpen2] = useState(false);
+  const [reviews2, setReviews2] = useState([])
+
+  function handleClickOpen2() {
+    setOpen2(true)
+  }
+
+  function handleClose2() {
+    setOpen2(false)
+  }
+  
+  const descriptionElementRef = React.useRef(null);
+  useEffect(() => {
+    if (open2) {
+      const { current: descriptionElement } = descriptionElementRef;
+      if (descriptionElement !== null) {
+        descriptionElement.focus();
       }
-      setReview({ reviewer: session.user.id, reviewee: info.id, moduleCode: MC, content: "", rate: 0})
-      setHave(true)
-      fetchListdata()
-      setOpen(false);
     }
-    
-    console.log(listdata)
-    console.log(have)
+  }, [open2]);
 
-    function handleClickOpen() {
-      setOpen(true);
-    }
-
-    function handleClose() {
-      setReview({ reviewer: session.user.id, reviewee: info.id, moduleCode: MC, content: "", rate: 0})
-      setOpen(false)
-    }
-
-    // reviews 
-    const [open2, setOpen2] = useState(false);
-    const [reviews2, setReviews2] = useState([])
-
-    function handleClickOpen2() {
-      setOpen2(true)
-    }
-
-    function handleClose2() {
-      setOpen2(false)
-    }
-    
-    const descriptionElementRef = React.useRef(null);
-    useEffect(() => {
-      if (open2) {
-        const { current: descriptionElement } = descriptionElementRef;
-        if (descriptionElement !== null) {
-          descriptionElement.focus();
-        }
-      }
-    }, [open2]);
-
-    async function fetchReviews(user) {
-      const { data } = await supabase
-          .from('reviews')
-          .select('*') 
-          .eq('reviewee', user) 
-      setReviews2(data)
-    }
-
-    // async function finalClick(profile) {
-    //   setInfo(profile);
-    //   console.log(info.id)
-    //   haveReview();
-    // }
+  async function fetchReviews(user) {
+    const { data } = await supabase
+        .from('reviews')
+        .select('*') 
+        .eq('reviewee', user) 
+    setReviews2(data)
+  }
 
     return (
         <div style={{height: "100vh"}}>
@@ -214,42 +201,38 @@ function ViewProfileYourProjects() {
 
             <Stack direction="row" spacing={2}  divider={<Divider orientation="vertical" flexItem />} justifyContent="center">
             {
-      
               profiles ? profiles.map((profile) => (
                 <div>  
                 <Button variant="outlined" onClick={() => setInfo(profile)}> Click to View Profile of Groupmate {profiles.indexOf(profile) + 1} </Button>
                 </div>
               )) : "" 
-              
             }
             </Stack>
 
-            <h1></h1>
+            <h1> </h1>
 
             <Box1 sx={{ 
-        //display: 'flex',
-        //alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%'}}>
-            <Collapse in={clickedsubmit && have}>
-      <Alert severity="warning"
-          action={
-            <IconButton
-              aria-label="close"
-              size="small"
-              onClick={() => {
-                setClickedsubmit(false);
-              }}
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
-          }
-          sx={{ mb: 2 }}
-        >
-          Review submitted before
-        </Alert>
-      </Collapse>
-      </Box1>
+              justifyContent: 'center',
+              width: '100%'}}>
+              <Collapse in={clickedsubmit && have}>
+                <Alert severity="warning"
+                  action={
+                    <IconButton
+                      aria-label="close"
+                      size="small"
+                      onClick={() => {
+                        setClickedsubmit(false);
+                      }}
+                    >
+                      <CloseIcon fontSize="inherit" />
+                    </IconButton>
+                  }
+                  sx={{ mb: 2 }}
+                >
+                  A review has been submitted before. 
+                </Alert>
+              </Collapse>
+            </Box1>
    
 
             <Box> 
@@ -309,7 +292,8 @@ function ViewProfileYourProjects() {
                 Leave A Review
               </Button>
               <Dialog fullWidth={true} open={open} onClose={handleClose}>
-                <DialogTitle>Leave A Review</DialogTitle>
+                <DialogTitle>Leave A Review </DialogTitle>
+                <Alert severity="info">You will only be allowed to leave a review once! </Alert>
                 <DialogContent>
                   <DialogContentText>
                     Please rate your groupmate, {info ? info.username : ""}

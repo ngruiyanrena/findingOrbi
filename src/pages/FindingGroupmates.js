@@ -35,10 +35,6 @@ function FindingGroupmates() {
     <div className="App">
       <h1>Find Your Groupmates</h1>
 
-      <div class="flex-container">
-
-      {/* style={{width:"50%", marginLeft:"80px"}} */}
-      <div class="flex-child" > 
       <Box> 
         <h1>Search</h1>
         <Input 
@@ -47,14 +43,13 @@ function FindingGroupmates() {
           icon={<IconSearch />}
         />
       </Box>
-      </div>
 
-      {/* style={{width:"50%", float:'right'}} */}
-      <div class="flex-child"> 
+      <div> 
       <Box> 
         <h1>Filter </h1>
         <p>Input your own work style</p>
         <p> Feel free to leave it blank if you have no preference!</p>
+        <div> 
         <Input 
           label= "Team Member / Team Leader"
           placeholder="eg. Team Member" 
@@ -73,6 +68,8 @@ function FindingGroupmates() {
           onChange={event => setWorkingStyle3(event.target.value)}
           descriptionText=" "
         />
+        </div>
+        <div>
         <Input 
           label= "Detail Oriented / Broad Perspective "
           placeholder="eg. Detail Oriented" 
@@ -85,10 +82,11 @@ function FindingGroupmates() {
           onChange={event => setWorkingStyle5(event.target.value)}
           descriptionText=" "
         />
+        </div>
 
       </Box>
       </div>
-      </div>
+
 
       {posts.filter(post => {
         if (query === '' && workingStyle1 === '' && workingStyle2 === '' && workingStyle3 === '' && 
