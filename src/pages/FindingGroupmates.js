@@ -1,10 +1,9 @@
 import '../App.css';
 import { useState, useEffect } from 'react'
 import { supabase } from '../client'
-import { IconSearch, IconUser, Input } from "@supabase/ui";
-import { Button } from "@material-ui/core";
+import { IconSearch, Input } from "@supabase/ui";
 import { Link } from 'react-router-dom';
-import { Grid, Card } from "@material-ui/core";
+import { Grid, Card, Select, MenuItem, InputLabel, FormControl, CardActionArea } from "@material-ui/core";
 
 
 function FindingGroupmates() {
@@ -34,53 +33,93 @@ function FindingGroupmates() {
     <div className="App">
       <h1>Find Your Groupmates</h1>
       <Grid container spacing={2}>
-      <Grid item xs={6}>
-      <Card style={{padding:"10px", marginLeft: "20%" }}> 
-        <h1>Search</h1>
-        <Input 
-          placeholder="Search Module Code here" 
-          onChange={event => setQuery(event.target.value)}
-          icon={<IconSearch />}
-        />
+      <Grid item xs={12}>
+      <Card style={{padding:"10px", marginLeft: "10%", marginRight: "10%" }}> 
+        <h1>Search And Filter</h1>
+        <div style={{margin: "auto"}}>
+          <Input 
+            placeholder="Search Module Code here" 
+            onChange={event => setQuery(event.target.value)}
+            icon={<IconSearch />}
+          />
+          <div style={{ display: "flex", justifyContent: "space-around" }}>
+          <FormControl style={{width: "25%"}}>
+            <InputLabel id="WorkingStyle1Select">Team Member/Team Leader</InputLabel>
+            <Select
+              labelId="WorkingStyle1Select"
+              id="WorkingStyle1Select"
+              value={workingStyle1}
+              label="Team Member/Team Leader"
+              onChange={(e) => setWorkingStyle1(e.target.value)}
+            >
+              <MenuItem value={"Team Member"}>Team Member</MenuItem>
+              <MenuItem value={"Team Leader"}>Team Leader</MenuItem>
+              <MenuItem value={""}>None</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl style={{width: "25%"}}>
+            <InputLabel id="WorkingStyle2Select">Supportive/Take Charge</InputLabel>
+            <Select
+              labelId="WorkingStyle2Select"
+              id="WorkingStyle2Select"
+              value={workingStyle2}
+              label="Supportive/Take Charge"
+              onChange={(e) => setWorkingStyle2(e.target.value)}
+            >
+              <MenuItem value={"Supportive"}>Supportive</MenuItem>
+              <MenuItem value={"Take Charge"}>Take Charge</MenuItem>
+              <MenuItem value={""}>None</MenuItem>
+            </Select>
+          </FormControl>  
+          <FormControl style={{width: "25%"}}>
+            <InputLabel id="WorkingStyle3Select">Organised / Spontaneous</InputLabel>
+            <Select
+              labelId="WorkingStyle3Select"
+              id="WorkingStyle3Select"
+              value={workingStyle3}
+              label="Organised / Spontaneous"
+              onChange={(e) => setWorkingStyle3(e.target.value)}
+            >
+              <MenuItem value={"Organised"}>Organised</MenuItem>
+              <MenuItem value={"Spontaneous"}>Spontaneous</MenuItem>
+              <MenuItem value={""}>None</MenuItem>
+            </Select>
+          </FormControl>  
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-around", marginTop: "5px" }}>
+            <FormControl style={{width: "30%"}}>
+              <InputLabel id="WorkingStyle4Select">Detail Oriented / Broad Perspective</InputLabel>
+              <Select
+                labelId="WorkingStyle4Select"
+                id="WorkingStyle4Select"
+                value={workingStyle4}
+                label="Detail Oriented / Broad Perspective"
+                onChange={(e) => setWorkingStyle4(e.target.value)}
+              >
+                <MenuItem value={"Detail Oriented"}>Detail Oriented</MenuItem>
+                <MenuItem value={"Broad Perspective"}>Broad Perspective</MenuItem>
+                <MenuItem value={""}>None</MenuItem>
+              </Select>
+            </FormControl>  
+            <FormControl style={{width: "30%"}}>
+              <InputLabel id="WorkingStyle5Select">Creative / Strategic</InputLabel>
+              <Select
+                labelId="WorkingStyle5Select"
+                id="WorkingStyle5Select"
+                value={workingStyle5}
+                label="Creative / Strategic"
+                onChange={(e) => setWorkingStyle5(e.target.value)}
+              >
+                <MenuItem value={"Creative"}>Creative</MenuItem>
+                <MenuItem value={"Strategic"}>Strategic</MenuItem>
+                <MenuItem value={""}>None</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+        </div>
       </Card>
       </Grid>
-      <Grid item xs={6}>
-      <Card style={{padding:"10px", marginRight: "20%" }}> 
-        <h1>Filter </h1>
-        <p>Input your own work style</p>
-        <p> Feel free to leave it blank if you have no preference!</p>
-        <Input 
-          label= "Team Member / Team Leader"
-          placeholder="eg. Team Member" 
-          onChange={event => setWorkingStyle1(event.target.value)}
-          descriptionText=" "
-        />
-        <Input 
-          label= "Supportive / Take Charge"
-          placeholder="eg. Supportive" 
-          onChange={event => setWorkingStyle2(event.target.value)}
-          descriptionText=" "
-        />
-        <Input 
-          label= "Organised / Spontaneous"
-          placeholder="eg. Organised" 
-          onChange={event => setWorkingStyle3(event.target.value)}
-          descriptionText=" "
-        />
-        <Input 
-          label= "Detail Oriented / Broad Perspective "
-          placeholder="eg. Detail Oriented" 
-          onChange={event => setWorkingStyle4(event.target.value)}
-          descriptionText=" "
-        />
-        <Input 
-          label= "Creative / Strategic"
-          placeholder="eg. Creative" 
-          onChange={event => setWorkingStyle5(event.target.value)}
-          descriptionText=" "
-        />
-      </Card>
-      </Grid>
+      
 
       <Grid item xs={12}>
       {posts.filter(post => {
@@ -98,21 +137,22 @@ function FindingGroupmates() {
         }
         }).map((post, id) => (
           <div key={post.id} style={{width:"100%"}}>
-            <Card style={{padding: "10px", marginLeft: "10%", marginRight: "10%", marginBottom: "2%"}}>
-                <p><strong>Module code:</strong> {post.ModuleCode}</p>
-                <p>Searching for <strong>{post.MemberNo}</strong> member(s)</p>
-                <p><strong>Preferred Partner Working Style:</strong> {post.WorkStylePref1}, {post.WorkStylePref2}, {post.WorkStylePref3}, {post.WorkStylePref4}, {post.WorkStylePref5}</p>
-                <Link style={{ textDecoration: 'none' }} to={{
-                  pathname: "/FindingGroupmates/ViewProfile", 
-                  state: {UserId: post.UserId, PostId: post.id}
-                }}>
-                  <Button size="small" variant="contained" startIcon={<IconUser />}>View Profile(s)</Button>
-                </Link>
-            </Card>
+            <Link style={{ textDecoration: 'none' }} to={{
+                pathname: "/FindingGroupmates/ViewProfile", 
+                state: {UserId: post.UserId, PostId: post.id}
+              }}>
+              <Card style={{padding: "10px", marginLeft: "10%", marginRight: "10%", marginBottom: "1%", height: "10rem"}}>
+                <CardActionArea style={{height: "100%"}}>
+                  <h2><strong>Module code:</strong> {post.ModuleCode}</h2>
+                  <p>Searching for <strong>{post.MemberNo}</strong> member(s)</p>
+                  <p><strong>Preferred Partner Working Style:</strong> {post.WorkStylePref1}, {post.WorkStylePref2}, {post.WorkStylePref3}, {post.WorkStylePref4}, {post.WorkStylePref5}</p>
+                </CardActionArea>
+              </Card>
+            </Link>
           </div>
       ))} 
       </Grid>
-      </Grid>
+    </Grid>
     </div>
   );
 }
