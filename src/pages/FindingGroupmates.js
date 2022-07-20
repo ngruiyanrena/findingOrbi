@@ -42,6 +42,7 @@ function FindingGroupmates() {
             onChange={event => setQuery(event.target.value)}
             icon={<IconSearch />}
           />
+          <h1> </h1>
           <div style={{ display: "flex", justifyContent: "space-around" }}>
           <FormControl style={{width: "25%"}}>
             <InputLabel id="WorkingStyle1Select">Team Member/Team Leader</InputLabel>
