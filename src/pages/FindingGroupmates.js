@@ -1,11 +1,10 @@
 import '../App.css';
 import { useState, useEffect } from 'react'
 import { supabase } from '../client'
-import Box from "../component/Box";
 import { IconSearch, IconUser, Input } from "@supabase/ui";
 import { Button } from "@material-ui/core";
 import { Link } from 'react-router-dom';
-
+import { Grid, Card } from "@material-ui/core";
 
 
 function FindingGroupmates() {
@@ -34,22 +33,22 @@ function FindingGroupmates() {
   return (
     <div className="App">
       <h1>Find Your Groupmates</h1>
-
-      <Box> 
+      <Grid container spacing={2}>
+      <Grid item xs={6}>
+      <Card style={{padding:"10px", marginLeft: "20%" }}> 
         <h1>Search</h1>
         <Input 
           placeholder="Search Module Code here" 
           onChange={event => setQuery(event.target.value)}
           icon={<IconSearch />}
         />
-      </Box>
-
-      <div> 
-      <Box> 
+      </Card>
+      </Grid>
+      <Grid item xs={6}>
+      <Card style={{padding:"10px", marginRight: "20%" }}> 
         <h1>Filter </h1>
         <p>Input your own work style</p>
         <p> Feel free to leave it blank if you have no preference!</p>
-        <div> 
         <Input 
           label= "Team Member / Team Leader"
           placeholder="eg. Team Member" 
@@ -68,8 +67,6 @@ function FindingGroupmates() {
           onChange={event => setWorkingStyle3(event.target.value)}
           descriptionText=" "
         />
-        </div>
-        <div>
         <Input 
           label= "Detail Oriented / Broad Perspective "
           placeholder="eg. Detail Oriented" 
@@ -82,12 +79,10 @@ function FindingGroupmates() {
           onChange={event => setWorkingStyle5(event.target.value)}
           descriptionText=" "
         />
-        </div>
+      </Card>
+      </Grid>
 
-      </Box>
-      </div>
-
-
+      <Grid item xs={12}>
       {posts.filter(post => {
         if (query === '' && workingStyle1 === '' && workingStyle2 === '' && workingStyle3 === '' && 
         workingStyle4 === '' && workingStyle5 === '') {
@@ -102,20 +97,22 @@ function FindingGroupmates() {
           return post;
         }
         }).map((post, id) => (
-          <div key={post.id}>
-            <Box>
-              <p><strong>Module code:</strong> {post.ModuleCode}</p>
-              <p>Searching for <strong>{post.MemberNo}</strong> member(s)</p>
-              <p><strong>Preferred Partner Working Style:</strong> {post.WorkStylePref1}, {post.WorkStylePref2}, {post.WorkStylePref3}, {post.WorkStylePref4}, {post.WorkStylePref5}</p>
-              <Link style={{ textDecoration: 'none' }} to={{
-                pathname: "/FindingGroupmates/ViewProfile", 
-                state: {UserId: post.UserId, PostId: post.id}
-              }}>
-                <Button size="small" variant="contained" startIcon={<IconUser />}>View Profile(s)</Button>
-              </Link>
-            </Box>
+          <div key={post.id} style={{width:"100%"}}>
+            <Card style={{padding: "10px", marginLeft: "10%", marginRight: "10%", marginBottom: "2%"}}>
+                <p><strong>Module code:</strong> {post.ModuleCode}</p>
+                <p>Searching for <strong>{post.MemberNo}</strong> member(s)</p>
+                <p><strong>Preferred Partner Working Style:</strong> {post.WorkStylePref1}, {post.WorkStylePref2}, {post.WorkStylePref3}, {post.WorkStylePref4}, {post.WorkStylePref5}</p>
+                <Link style={{ textDecoration: 'none' }} to={{
+                  pathname: "/FindingGroupmates/ViewProfile", 
+                  state: {UserId: post.UserId, PostId: post.id}
+                }}>
+                  <Button size="small" variant="contained" startIcon={<IconUser />}>View Profile(s)</Button>
+                </Link>
+            </Card>
           </div>
       ))} 
+      </Grid>
+      </Grid>
     </div>
   );
 }
